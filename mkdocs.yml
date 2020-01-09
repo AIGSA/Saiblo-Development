@@ -1,5 +1,5 @@
 site_name: Saiblo 平台开发维护手册
-pages:
+nav:
 - 概览: 'index.md' 
 - 运维手册:
     - '平台部署': 'ops/deployment.md'
