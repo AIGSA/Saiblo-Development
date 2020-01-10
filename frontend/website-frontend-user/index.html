@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>用户系统 - Saiblo 平台开发维护手册</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u7528\u6237\u7cfb\u7edf";
+    var mkdocs_page_input_path = "frontend\\website-frontend-user.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Saiblo 平台开发维护手册</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">概览</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">运维手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../ops/deployment/">平台部署</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/proxy/">反向代理</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/auto_match/">定时对局抽取</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/judger.md">评测机部署</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/wiki.md">Wiki 管理</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">开发手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev/arch/">平台架构</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/frontend/">前端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/backend/">后端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/judger/">评测端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/frontend2backend/">前端与后端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/frontend2judger/">前端与评测端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/backend2judger/">后端与评测端</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">前端手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../website-frontend/">概述</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">用户系统</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#-">网站前端-用户管理系统</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#loginvue">login.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#registervue">register.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#forget_passwordvue">forget_password.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#reset_passwordvue">reset_password.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#profilevue">profile.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#edit_profilevue">edit_profile.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#user_idvue">user/_id.vue</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-contest/">比赛系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-game/">游戏系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-group/">小组系统</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Saiblo 平台开发维护手册</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>前端手册 &raquo;</li>
+        
+      
+    
+    <li>用户系统</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="-">网站前端-用户管理系统</h1>
+<div class="toc">
+<ul>
+<li><a href="#-">网站前端-用户管理系统</a><ul>
+<li><a href="#loginvue">login.vue</a></li>
+<li><a href="#registervue">register.vue</a></li>
+<li><a href="#forget_passwordvue">forget_password.vue</a></li>
+<li><a href="#reset_passwordvue">reset_password.vue</a></li>
+<li><a href="#profilevue">profile.vue</a></li>
+<li><a href="#edit_profilevue">edit_profile.vue</a></li>
+<li><a href="#user_idvue">user/_id.vue</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="loginvue">login.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/login</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>用户登录界面</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>游客</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/login.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>form.username</td>
+<td>表单中的用户名</td>
+</tr>
+<tr>
+<td>form.password</td>
+<td>表单中的密码</td>
+</tr>
+<tr>
+<td>isLoading</td>
+<td>加载中，在提交表单之后，等待服务器返回登录结果之间为True</td>
+</tr>
+<tr>
+<td>isOK</td>
+<td>服务器返回登录成功后，isOK为True</td>
+</tr>
+<tr>
+<td>err_code</td>
+<td>服务器返回登录失败后，err_code设为response的错误码</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>login</td>
+<td>null</td>
+<td>null</td>
+<td>点击登录按钮后会调用此函数，首先进行Vuelidate验证是否输入了用户名和密码，然后将表单发送给服务器等待服务器确认登录成功与否，如果登录成功，跳转到网站首页（使用nuxt.js 的loginWith实现，默认行为）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="registervue">register.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/register</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>用户注册界面</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>游客</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/register.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>form.username</td>
+<td>表单中的用户名</td>
+</tr>
+<tr>
+<td>form.password</td>
+<td>表单中的密码</td>
+</tr>
+<tr>
+<td>form.email</td>
+<td>表单中的邮箱</td>
+</tr>
+<tr>
+<td>form.confirm_password</td>
+<td>表单中的确认密码</td>
+</tr>
+<tr>
+<td>isLoading</td>
+<td>加载中，在提交表单之后，等待服务器返回登录结果之间为True</td>
+</tr>
+<tr>
+<td>isOK</td>
+<td>服务器返回登录成功后，isOK为True</td>
+</tr>
+<tr>
+<td>err_code</td>
+<td>服务器返回登录失败后，err_code设为response的错误码</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>register</td>
+<td>null</td>
+<td>null</td>
+<td>点击注册按钮后会调用此函数，首先进行Vuelidate验证用户名，密码，邮箱格式是否正确，确认密码是否与密码一致，然后将表单发送给服务器等待服务器确认注册成功与否，如果注册成功，显示1s的注册成功消息栏并在1s后跳转到登录界面</td>
+</tr>
+</tbody>
+</table>
+<h2 id="forget_passwordvue">forget_password.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/forget_password</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>用户忘记密码后进行邮箱验证</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>游客</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/forget_password.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<p>TODO：邮箱服务器没搞定，zah说上线前再修</p>
+<h2 id="reset_passwordvue">reset_password.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/reset_password</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>用户忘记密码后进行邮箱验证，验证成功后重置密码</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>登录用户</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/reset_password.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<p>TODO：邮箱服务器没搞定，zah说上线前再修</p>
+<h2 id="profilevue">profile.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/profile</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>个人资料界面</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>登录用户</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/profile.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cardOneActive</td>
+<td>用于实现鼠标移到头像上显示修改资料的效果（早期Semantic UI Vue使用不熟练的结果）</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="edit_profilevue">edit_profile.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/edit_profile</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>修改相关的个人资料</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>登录用户</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/edit_profile.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>profile_form.username</td>
+<td>表格1中的用户名，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.email</td>
+<td>表格1中的邮箱，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.name</td>
+<td>表格1中的姓名，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.sex</td>
+<td>表格1中的性别，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.school</td>
+<td>表格1中的学校，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.department</td>
+<td>表格1中的院系，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.biography</td>
+<td>表格1中的自我介绍，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>profile_form.isLoading</td>
+<td>表格1对应的是否加载中的状态变量</td>
+</tr>
+<tr>
+<td>profile_form.isOK</td>
+<td>表格1修改成功后，设为True</td>
+</tr>
+<tr>
+<td>profile_form.err_code</td>
+<td>表格1提交失败后，err_code设为响应的status_code</td>
+</tr>
+<tr>
+<td>password_form.username</td>
+<td>表格2中的用户名，使用nuxt.js提供的方式获取值</td>
+</tr>
+<tr>
+<td>password_form.old_password</td>
+<td>表格2中的密码，表示原始密码</td>
+</tr>
+<tr>
+<td>password_form.password</td>
+<td>表格2中的新密码</td>
+</tr>
+<tr>
+<td>password_form.confirm_password</td>
+<td>表格2中的确认密码</td>
+</tr>
+<tr>
+<td>password_form.isLoading</td>
+<td>表格2对应的是否加载中的状态变量</td>
+</tr>
+<tr>
+<td>password_form.isOK</td>
+<td>表格2提交成功后，设为True</td>
+</tr>
+<tr>
+<td>password_form.err_code</td>
+<td>表格2提交失败后，err_code设为响应的status_code</td>
+</tr>
+<tr>
+<td>sex_options</td>
+<td>Vue用于实现下拉菜单，包含下拉菜单中每项的icon，文字描述和值</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>edit_profile</td>
+<td>null</td>
+<td>null</td>
+<td>点击保存资料按钮后会调用此函数，首先进行Vuelidate验证所填表项格式是否合法，然后将表单发送给服务器等待服务器确认修改成功与否，如果保存成功，显示1s的注册成功消息栏</td>
+</tr>
+<tr>
+<td>change_password</td>
+<td>null</td>
+<td>null</td>
+<td>点击确认修改按钮后会调用此函数，首先进行Vuelidate验证所填表项格式是否合法，然后将表单发送给服务器等待服务器确认修改成功与否，如果修改成功，显示1s的注册成功消息栏</td>
+</tr>
+</tbody>
+</table>
+<h2 id="user_idvue">user/_id.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/user/&lt;username&gt;</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>查看username用户的相关资料</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>登录用户</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/user_id.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>nuxt.js 中使用asyncData向服务器获取值，表示用户名为username的用户的信息，包括加入时间，注册邮箱，性别等等</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>依赖部件</th>
+<th>传入部件参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>match-list</td>
+<td>username</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../website-frontend-contest/" class="btn btn-neutral float-right" title="比赛系统">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../website-frontend/" class="btn btn-neutral" title="概述"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../website-frontend/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../website-frontend-contest/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

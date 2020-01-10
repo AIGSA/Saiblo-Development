@@ -18,7 +18,7 @@
   <script>
     // Current page data
     var mkdocs_page_name = "\u524d\u7aef\u4e0e\u540e\u7aef";
-    var mkdocs_page_input_path = "dev/frontend2backend.md";
+    var mkdocs_page_input_path = "dev\\frontend2backend.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -71,11 +71,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/judger/">评测机部署</a>
+    <a class="" href="../../ops/judger.md">评测机部署</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/wiki/">Wiki 管理</a>
+    <a class="" href="../../ops/wiki.md">Wiki 管理</a>
                 </li>
     </ul>
 	    </li>
@@ -109,6 +109,10 @@
     
         <ul>
         
+            <li><a class="toctree-l4" href="#api">API 的使用</a></li>
+        
+            <li><a class="toctree-l4" href="#api_1">API 介绍说明</a></li>
+        
             <li><a class="toctree-l4" href="#_2">用户模块</a></li>
         
             <li><a class="toctree-l4" href="#_3">小组模块</a></li>
@@ -125,6 +129,33 @@
                 <li class="">
                     
     <a class="" href="../backend2judger/">后端与评测端</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">前端手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../frontend/website-frontend/">概述</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../frontend/website-frontend-user/">用户系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../frontend/website-frontend-contest/">比赛系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../frontend/website-frontend-game/">游戏系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../frontend/website-frontend-group/">小组系统</a>
                 </li>
     </ul>
 	    </li>
@@ -167,7 +198,20 @@
               
                 <h1 id="_1">后端与前端</h1>
 <p>整个 <strong><em>Saiblo</em></strong> 网站包括三个部分，即<strong>前端</strong>、<strong>后端</strong>与<strong>评测端</strong>。这个文档主要讲的是<strong>后端</strong>与<strong>前端</strong>的交互。后端与前端是网站的重要组成部分，前端需要从后端拉取数据并进行显示，用户也需要从前端输入数据录入后端。为此，我们设计了一系列的前后端交互的 API ，以下将分模块来介绍后端的各个模块的 API 及其功能。</p>
-<p>前端要使用这些 API ，一般是通过<code>axios.post[put/get/...](URL, data)</code>来进行操作的。例如<code>axios.post('token/', {username: a, password: b})</code>。</p>
+<h2 id="api">API 的使用</h2>
+<p>前端要使用这些 API ，一般是通过<code>this.$axios.post[put/get/...](URL, data)</code>来进行操作的。以下为一个示例。</p>
+<pre><code class="javascript">this.$axios.post(&quot;token/&quot;, { username: a, password: b }).then(
+  res =&gt; {
+    //res为请求成功返回的数据，res.data为以下 API 介绍中的数据内容
+  },
+  err =&gt; {
+    //err为请求失败时返回的数据
+  }
+);
+</code></pre>
+
+<p><code>err</code>一般不需要实现，因为网站前端在<code>axios</code>组件中添加了响应拦截器，可以拦截返回的响应，先对响应进行一次判断，若为失败的响应，会自动弹出返回时后端报出的错误。之后再将响应传到网页中进行处理。添加的部分可参见<code>/plugins/axios.js</code>。</p>
+<h2 id="api_1">API 介绍说明</h2>
 <p>以下对介绍 API 时所列举的各项<strong>属性</strong>进行说明。</p>
 <ul>
 <li><strong>post/put/get/...方法</strong>：指明使用<code>axios</code>时所使用的方法。</li>

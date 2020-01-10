@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>小组系统 - Saiblo 平台开发维护手册</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u5c0f\u7ec4\u7cfb\u7edf";
+    var mkdocs_page_input_path = "frontend\\website-frontend-group.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Saiblo 平台开发维护手册</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">概览</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">运维手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../ops/deployment/">平台部署</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/proxy/">反向代理</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/auto_match/">定时对局抽取</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/judger.md">评测机部署</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/wiki.md">Wiki 管理</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">开发手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev/arch/">平台架构</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/frontend/">前端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/backend/">后端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/judger/">评测端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/frontend2backend/">前端与后端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/frontend2judger/">前端与评测端</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/backend2judger/">后端与评测端</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">前端手册</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../website-frontend/">概述</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-user/">用户系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-contest/">比赛系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-game/">游戏系统</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">小组系统</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#-">网站前端-小组系统</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#groupsvue">groups.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#admin_groupsvue">admin_groups.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#groups_idvue">groups/_id.vue</a></li>
+        
+            <li><a class="toctree-l4" href="#groups_slugmanagevue">groups/_slug/manage.vue</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Saiblo 平台开发维护手册</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>前端手册 &raquo;</li>
+        
+      
+    
+    <li>小组系统</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="-">网站前端-小组系统</h1>
+<div class="toc">
+<ul>
+<li><a href="#-">网站前端-小组系统</a><ul>
+<li><a href="#groupsvue">groups.vue</a></li>
+<li><a href="#admin_groupsvue">admin_groups.vue</a></li>
+<li><a href="#groups_idvue">groups/_id.vue</a></li>
+<li><a href="#groups_slugmanagevue">groups/_slug/manage.vue</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="groupsvue">groups.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/groups</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>查看所有的小组</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>游客</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/groups.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show_modal</td>
+<td>在点击创建小组后，show_modal设置为true，用于显示创建小组的弹出窗体</td>
+</tr>
+<tr>
+<td>group_form</td>
+<td>创建小组中的表单，包含小组名，小组简介，申请理由</td>
+</tr>
+<tr>
+<td>isLoading</td>
+<td>加载中，在提交表单之后，等待服务器返回创建小组表格结果之间为True</td>
+</tr>
+<tr>
+<td>isOK</td>
+<td>服务器返回提交创建申请成功后，isOK为True</td>
+</tr>
+<tr>
+<td>err_code</td>
+<td>服务器返回提交创建申请失败后，err_code设为response的错误码</td>
+</tr>
+<tr>
+<td>groups</td>
+<td>页面中显示的所有小组，是从获取的所有小组origin_groups中筛选出与搜索小组名keyWord相关的所有小组</td>
+</tr>
+<tr>
+<td>origin_groups</td>
+<td>从服务器获取到的所有的小组，使用AsyncData获取值</td>
+</tr>
+<tr>
+<td>keyWord</td>
+<td>绑定到搜索的小组名</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>truncate</td>
+<td>原始字符串，截断长度</td>
+<td>截断后的字符串表示</td>
+<td>主要用于小组介绍过长时进行字符串截断</td>
+</tr>
+<tr>
+<td>apply</td>
+<td>申请的小组对象</td>
+<td>null</td>
+<td>点击申请加入某小组之后，调用该函数，首先判断与该小组的关系，如果没有入组，没有申请加入，发送申请加入的请求。如果小组的加入权限为任何人，那么注意加入成功后维护成员数+1</td>
+</tr>
+<tr>
+<td>cancel</td>
+<td>取消申请的小组对象</td>
+<td>null</td>
+<td>点击取消申请之后，调用此函数，首先获取自己的所有申请，之后找到申请该小组的那一条，向服务器发出取消这一条申请的请求</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>退出已经加入的小组对象</td>
+<td>null</td>
+<td>点击退出小组之后，调用此函数，向服务器发出退出小组的请求，并且维护该小组对应的成员数-1，如果是管理员还要维护管理员列表</td>
+</tr>
+<tr>
+<td>show</td>
+<td>null</td>
+<td>null</td>
+<td>点击创建小组时，设置isLoading和isOK的初值（可能连续创建多个小组）</td>
+</tr>
+<tr>
+<td>create_groups</td>
+<td>null</td>
+<td>null</td>
+<td>点击创建小组弹出窗口中的提交按钮后会调用此函数，首先进行Vuelidate验证小组名，简介，理由是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
+</tr>
+<tr>
+<td>searchKeyWord</td>
+<td>null</td>
+<td>null</td>
+<td>使用origin_groups和keyWord来更新groups的值</td>
+</tr>
+<tr>
+<td>keyWordFilter</td>
+<td>使用关键字筛选小组时的判定方式</td>
+<td>判定结果</td>
+<td>协助searchKeyWord进行筛选</td>
+</tr>
+<tr>
+<td>group_permission</td>
+<td>小组对象</td>
+<td>显示加入权限文本</td>
+<td>将加入权限参数转化为可读文本</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>依赖部件</th>
+<th>传入部件参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>confirm-button</td>
+<td>确认退出时弹出的消息，调用quit(group)函数之前弹出确认信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="admin_groupsvue">admin_groups.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/admin_groups</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>超级管理员用于管理所有小组</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>超级管理员</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/admin_groups.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group_modal</td>
+<td>在小组申请列表中，点击组名，可以查看这条申请的详细信息，弹出窗口中的数据绑定到group_modal上</td>
+</tr>
+<tr>
+<td>applying_groups</td>
+<td>使用asyncData获取值，表示所有创建小组的申请</td>
+</tr>
+<tr>
+<td>approved_groups</td>
+<td>使用asyncData获取值，表示所有已经通过申请的小组</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read_detail</td>
+<td>申请编号，小组姓名，小组简介，申请理由</td>
+<td>null</td>
+<td>将想阅读详细信息的申请的数据绑定到group_modal上，用于弹窗显示（好像实现麻烦了）</td>
+</tr>
+<tr>
+<td>approve</td>
+<td>同意通过的小组</td>
+<td>null</td>
+<td>点击申请列表中的某条申请的同意之后调用，向服务器发送请求，注意成功时维护申请列表和已通过小组列表</td>
+</tr>
+<tr>
+<td>reject</td>
+<td>拒绝通过的小组</td>
+<td>null</td>
+<td>点击申请列表中的某条申请的拒绝之后调用，向服务器发送请求，注意拒绝成功时维护申请列表</td>
+</tr>
+<tr>
+<td>delete_group</td>
+<td>删除已经通过的小组</td>
+<td>null</td>
+<td>点击已通过的列表中某个小组的删除之后调用，向服务器发送请求，删除成功时要维护已通过的小组列表</td>
+</tr>
+</tbody>
+</table>
+<h2 id="groups_idvue">groups/_id.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/groups/&lt;group id&gt;</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>查看编号为group id的小组的详细信息</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>登录用户</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/groups_id.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>notice</td>
+<td>在公告列表中，点击某条公告，可以查看这条公告的详细信息，弹出窗口中的数据绑定到notice上</td>
+</tr>
+<tr>
+<td>contests</td>
+<td>该小组下属所有比赛，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>isLoading</td>
+<td>在向服务器发送申请加入小组/取消申请/退出小组时，设为True，表示正在发送请求</td>
+</tr>
+<tr>
+<td>caution</td>
+<td>在比赛列表中选择切换AI时会弹出提醒窗口，提醒用户扣分惩罚，弹出窗口的数据绑定到caution上</td>
+</tr>
+<tr>
+<td>group</td>
+<td>小组对象，通过地址中小组编号向服务器请求后获取，使用asyncData获取值</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read_notice</td>
+<td>选中的通知的id</td>
+<td>null</td>
+<td>点击通知查看详情时调用，根据notice id判断是哪条通知，将详细信息绑定到notice上</td>
+</tr>
+<tr>
+<td>apply/cancel/quit</td>
+<td>null</td>
+<td>null</td>
+<td>与groups.vue中使用方法相同</td>
+</tr>
+<tr>
+<td>selectCode</td>
+<td>选中的比赛对象，选中的代码分支</td>
+<td>null</td>
+<td>修改向某比赛派遣的AI的分支，或是向某比赛派遣新分支</td>
+</tr>
+<tr>
+<td>cancelCode</td>
+<td>选中的比赛对象</td>
+<td>null</td>
+<td>取消向该比赛排遣的分支</td>
+</tr>
+<tr>
+<td>openCaution</td>
+<td>message</td>
+<td>null</td>
+<td>在更换派遣AI或是取消派遣时，弹出积分惩罚的弹窗</td>
+</tr>
+<tr>
+<td>依赖部件</td>
+<td>传入部件参数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>------------</td>
+<td>----------------------------------------</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>codeSelector</td>
+<td>当前用户名，游戏名，原始派遣的代码分支等</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="groups_slugmanagevue">groups/_slug/manage.vue</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址</td>
+<td><code>/groups/&lt;group id&gt;/manage</code></td>
+</tr>
+<tr>
+<td>用途</td>
+<td>管理小组编号为group id的小组的信息，包括加入权限，发布公告，成员管理，比赛管理等等</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>该小组的小组管理员</td>
+</tr>
+<tr>
+<td>预览</td>
+<td><img alt="" src="../imgs/groups_id_manage.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group</td>
+<td>小组对象，通过地址中小组编号向服务器请求后获取，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>competition_editor</td>
+<td>管理比赛选项卡相关的变量</td>
+</tr>
+<tr>
+<td>competition_editor.competition</td>
+<td>在管理比赛选项卡中点击新增或是修改比赛，弹出表格弹窗，表格数据绑定到这里</td>
+</tr>
+<tr>
+<td>competition_editor.isLoading</td>
+<td>正在向服务器提交competition_editor.competition表单</td>
+</tr>
+<tr>
+<td>competition_editor.isOK</td>
+<td>提交表单成功</td>
+</tr>
+<tr>
+<td>competition_editor.err_code</td>
+<td>提交表单失败，err_code设为响应的status code</td>
+</tr>
+<tr>
+<td>competition_editor.create</td>
+<td>是否是以新增比赛的方式打开弹窗的</td>
+</tr>
+<tr>
+<td>competition_editor.game_options</td>
+<td>所有已经部署的游戏列表，用来实现表格弹窗中的下拉菜单，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>info</td>
+<td>小组信息选项卡相关的变量，同时也绑定了修改小组信息时提交表单中的数据，包括小组名，小组加入权限，小组介绍等等</td>
+</tr>
+<tr>
+<td>notice_form</td>
+<td>管理公告选项卡相关的变量</td>
+</tr>
+<tr>
+<td>notice_form.notices</td>
+<td>所有公告，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>notice_form.modal</td>
+<td>点击公告会弹出公告详情的弹窗，该弹窗中所有的数据绑定到这里</td>
+</tr>
+<tr>
+<td>permission_options</td>
+<td>用于实现申请权限的下拉菜单</td>
+</tr>
+<tr>
+<td>competitions</td>
+<td>所有该小组的比赛，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>applications</td>
+<td>所有加入该小组的申请，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>members</td>
+<td>所有小组内的成员，使用asyncData获取值</td>
+</tr>
+<tr>
+<td>id</td>
+<td>当前所在选项卡的编号</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modifyInfo</td>
+<td>null</td>
+<td>null</td>
+<td>点击小组信息中的确认修改按钮后会调用此函数，首先进行Vuelidate验证小组名，简介是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
+</tr>
+<tr>
+<td>formatContests</td>
+<td>所有比赛</td>
+<td>null</td>
+<td>根据从服务器中获得的所有比赛的原始数据中的时间，推断现在比赛的状态为未开始还是进行中</td>
+</tr>
+<tr>
+<td>reloadInfo</td>
+<td>null</td>
+<td>null</td>
+<td>修改小组详细信息成功后，重新获取小组详细信息</td>
+</tr>
+<tr>
+<td>delete_competition</td>
+<td>null</td>
+<td>null</td>
+<td>管理比赛中点击删除调用，删除该比赛并维护比赛列表</td>
+</tr>
+<tr>
+<td>submit_competition_editor</td>
+<td>null</td>
+<td>null</td>
+<td>editCompetition调用，用于提交弹窗表格到服务器上，首先进行Vuelidate验证比赛名，简介是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
+</tr>
+<tr>
+<td>editCompetition</td>
+<td>要编辑的比赛</td>
+<td>null</td>
+<td>在比赛编辑选项卡点击某比赛后面的修改时调用，设置competition_editor.create，然后将数据传给competition_editor.competition，调用submit_competition_editor</td>
+</tr>
+<tr>
+<td>handleApplication</td>
+<td>要处理的申请的id，通过/拒绝</td>
+<td>null</td>
+<td>管理成员选项卡中申请列表里，选通过或拒绝时调用，将处理申请的结果提交给服务器</td>
+</tr>
+<tr>
+<td>changeManager</td>
+<td>用户名，true</td>
+<td>null</td>
+<td>将某用户提升为小组管理员</td>
+</tr>
+<tr>
+<td>deleteMember</td>
+<td>用户名</td>
+<td>null</td>
+<td>将某用户踢出小组</td>
+</tr>
+<tr>
+<td>demote</td>
+<td>用户</td>
+<td>null</td>
+<td>将某用户从管理员降至普通成员</td>
+</tr>
+<tr>
+<td>isManager</td>
+<td>用户名</td>
+<td>null</td>
+<td>判断某用户是否为小组管理员</td>
+</tr>
+<tr>
+<td>isActive/select</td>
+<td>id</td>
+<td>null</td>
+<td>用于判断当前位于哪个选项卡</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>依赖部件</th>
+<th>传入部件参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>groupNoticeEditor</td>
+<td>小组编号</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../website-frontend-game/" class="btn btn-neutral" title="游戏系统"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../website-frontend-game/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
