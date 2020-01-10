@@ -6,6 +6,7 @@ nav:
     - '反向代理': 'ops/proxy.md'
     - '定时对局抽取': 'ops/auto_match.md'
     - '评测机部署': 'ops/judger.md'
+    - 'Wiki 管理': 'ops/wiki.md'
 - 开发手册:
     - '平台架构': 'dev/arch.md'
     - '前端': 'dev/frontend.md'
