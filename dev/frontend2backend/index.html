@@ -97,6 +97,17 @@
     <a class="current" href="./">前端与后端</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#_1">后端与前端</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#_2">用户模块</a></li>
+        
+            <li><a class="toctree-l4" href="#_3">小组模块</a></li>
+        
+        </ul>
+    
+
     </ul>
                 </li>
                 <li class="">
@@ -146,7 +157,697 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="_1">后端与前端</h1>
+<p>整个 <strong><em>Saiblo</em></strong> 网站包括三个部分，即<strong>前端</strong>、<strong>后端</strong>与<strong>评测端</strong>。这个文档主要讲的是<strong>后端</strong>与<strong>前端</strong>的交互。后端与前端是网站的重要组成部分，前端需要从后端拉取数据并进行显示，用户也需要从前端输入数据录入后端。为此，我们设计了一系列的前后端交互的 API ，以下将分模块来介绍后端的各个模块的 API 及其功能。</p>
+<p>前端要使用这些 API ，一般是通过<code>axios.post[put/get/...](URL, data)</code>来进行操作的。例如<code>axios.post('token/', {username: a, password: b})</code>。</p>
+<p>以下对介绍 API 时所列举的各项<strong>属性</strong>进行说明。</p>
+<ul>
+<li><strong>post/put/get/...方法</strong>：指明使用<code>axios</code>时所使用的方法。</li>
+<li><strong>权限</strong>：指明使用这个 API 时，用户所需要具有的特征和属性，即用户权限。便于前端对用户操作进行管理限制，同时后端也会判断用户是否能够使用此 API。</li>
+<li><strong>数据</strong>：指明使用这个 API 时，前端所需要向后端发送的信息。</li>
+<li><strong>响应</strong>：指明使用这个 API 时，后端会向前端发回的返回代码以及返回代码的意义。便于前端对这些响应代码进行区分与处理。</li>
+<li><strong>返回</strong>：指明如果正确调用了这个 API，并且正常返回时，后端返回给前端的数据。</li>
+</ul>
+<h2 id="_2">用户模块</h2>
+<p>用户模块的功能是控制用户的<strong>注册</strong>、<strong>登陆</strong>、<strong>注销</strong>；或是<strong>获取</strong>、<strong>修改</strong>用户的信息。</p>
+<h3 id="1-url-token">1 URL: token/</h3>
+<h4 id="11-post">1.1 POST方法</h4>
+<p><strong>用于用户登陆</strong>。验证身份信息，通过则获取新发放的<code>token</code>。用户的所有操作可以通过<code>token</code>进行身份验证。</p>
+<h5 id="111">1.1.1 权限</h5>
+<ul>
+<li>任何人</li>
+</ul>
+<h5 id="112">1.1.2 数据</h5>
+<pre><code class="json">{
+    username: String, //表示用户名
+    password: String //表示密码
+}
+</code></pre>
+
+<h5 id="113">1.1.3 响应</h5>
+<ul>
+<li>200：登录成功，获取到<code>token={"access": \&lt;access&gt;, "refresh": \&lt;refresh&gt;}</code></li>
+<li>401：用户名或密码错误</li>
+</ul>
+<h5 id="114">1.1.4 返回</h5>
+<pre><code class="python">{
+    'refresh': # refresh token
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU3MTk4MDk5OCwianRpIjoiM2UwNzU0YWU2NmQ2NDZkYWJmZDc4OWE4YjQ1YjNjOGYiLCJ1c2VyX2lkIjoyfQ.YIEn2aJ9zkzjgpw0aN03VIHCZAmgpvohMkMAmMeQi9U',
+    'access': # access token
+    'eyJ0eXA8iOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTcxODk4MTk4LCJqdGkiOiIwODZiMGIxMDVkMjQ0NGVhODNlMTg0NTIyYzc1YzEwZiIsInVzZXJfaWQiOjJ9.RVxrGW5b24JpCnLSJhkyONixMllJZOIe4Hj86TpCBp',
+}
+</code></pre>
+
+<h3 id="2-url-refresh">2 URL: refresh/</h3>
+<h4 id="21-post">2.1 POST方法</h4>
+<p>更新用户的<code>token</code>。</p>
+<h5 id="211">2.1.1 权限</h5>
+<ul>
+<li>已登录用户，即用户状态为“已登录”。</li>
+</ul>
+<h5 id="212">2.1.2 数据</h5>
+<pre><code class="json">{
+    refresh：String //登录时所获取的refresh token
+}
+</code></pre>
+
+<h5 id="213">2.1.3 响应</h5>
+<ul>
+<li>200：获取到新的token</li>
+</ul>
+<h5 id="214">2.1.4 返回</h5>
+<pre><code class="python">{
+    'access': # new access token
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTcxODk4NDA3LCJqdGkiOiJmMjE1Y2ZiMzhjMTA0MDNlYTQ2ZTkwMjNhNGRiZDA2MSIsInVzZXJfaWQiOjJ9.QS4-AKNhnEEzlzCKJ2clFsjHzb5hSAp4Uk1waLyraRg'
+}
+</code></pre>
+
+<h3 id="3-url-profile">3 URL: profile/</h3>
+<h4 id="31-get">3.1 GET方法</h4>
+<p>获取当前登录用户的个人信息，可用于判断是否登录。</p>
+<h5 id="311">3.1.1 权限</h5>
+<ul>
+<li>已登录用户，即用户状态为“已登录”。</li>
+</ul>
+<h5 id="312">3.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="313">3.1.3 返回</h5>
+<p>注：此处计划将来加入一些仅自己可见的私人信息项，现在暂且没加入。</p>
+<pre><code class="python">{
+    'user': {
+        'name': '叶良辰',
+        'biography': '后会有期',
+        'school': '',
+        'department': '',
+        'sex': '男',
+        'username': 'moon',
+        'email': 'moon@saiblo.com',
+        'email_md5': '496f4e4ae237bc3107d31400e5b61257',
+        'date_joined': 'Mon, 14 Oct 2019 14:57:44 +0800',
+        'id': 2,
+        'is_active': True
+    }
+}
+</code></pre>
+
+<h3 id="4-url-users">4 URL: users/</h3>
+<h4 id="41-get">4.1 GET方法</h4>
+<p>返回所有注册过的用户信息。</p>
+<h5 id="411">4.1.1 权限</h5>
+<ul>
+<li>任何人</li>
+</ul>
+<h5 id="412">4.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="413">4.1.3 返回</h5>
+<pre><code class="python">[
+    {
+        'name': '网管',
+        'biography': '',
+        'school': '',
+        'department': '',
+        'sex': '保密',
+        'username': 'admin',
+        'email': 'admin@saiblo.com',
+        'email_md5': 'c6c7721cf2ddbb4f8576620e394434d2',
+        'date_joined': 'Mon, 14 Oct 2019 14:56:36 +0800',
+        'id': 1,
+        'is_active': True
+    },
+    ...
+]
+</code></pre>
+
+<h4 id="42-post">4.2 POST方法</h4>
+<p>注册一个新的用户。</p>
+<h5 id="421">4.2.1 权限</h5>
+<ul>
+<li>任何人</li>
+</ul>
+<h5 id="422">4.2.2 数据</h5>
+<pre><code class="json">{
+    username: String, //表示用户名
+    password: String, //表示密码
+    email: String //表示邮箱
+}
+</code></pre>
+
+<h5 id="423">4.2.3 响应</h5>
+<ul>
+<li>201：注册成功</li>
+<li>400：数据不符合期望(前端应避免)或邮箱/用户名已存在</li>
+</ul>
+<h3 id="5-url-usersusername62">5 URL: users/\&lt;username>/</h3>
+<h4 id="51-get">5.1 GET方法</h4>
+<p>获取用户名为username的用户信息。</p>
+<h5 id="511">5.1.1 权限</h5>
+<ul>
+<li>任何人</li>
+</ul>
+<h5 id="512">5.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="513">5.1.3 返回</h5>
+<pre><code class="python">{
+    'name': '叶良辰',
+    'biography': '后会有期',
+    'school': '',
+    'department': '',
+    'sex': '男',
+    'username': 'moon',
+    'email': 'moon@saiblo.com',
+    'email_md5': '496f4e4ae237bc3107d31400e5b61257',
+    'date_joined': 'Mon, 14 Oct 2019 14:57:44 +0800',
+    'id': 2,
+    'is_active': True
+}
+</code></pre>
+
+<h4 id="52-put">5.2 PUT方法</h4>
+<p>修改用户个人信息(不包括密码)。</p>
+<h5 id="521">5.2.1 权限</h5>
+<ul>
+<li>本人</li>
+</ul>
+<h5 id="522">5.2.2 数据</h5>
+<pre><code class="json">{
+    name: String,//表示姓名
+    biography: String, //表示个人简介
+    school: String, //表示所在学校
+    department: String, //表示院系
+    sex: String //必须是“男”、“女”、“保密”三选一
+}
+</code></pre>
+
+<h5 id="523">5.2.3 响应</h5>
+<ul>
+<li>200：修改成功</li>
+<li>400：数据不符合期望(前端应避免)</li>
+</ul>
+<h4 id="53-patch">5.3 PATCH方法</h4>
+<p>与<code>put</code>方法作用相同。</p>
+<h4 id="54-delete">5.4 DELETE方法</h4>
+<p>删除该账号。</p>
+<h5 id="541">5.4.1 权限</h5>
+<ul>
+<li>本人</li>
+</ul>
+<h5 id="542">5.4.2 响应</h5>
+<ul>
+<li>204：删除成功</li>
+</ul>
+<h3 id="6-url-usersusername62update-password">6 URL: users/\&lt;username>/update-password/</h3>
+<h4 id="61-put">6.1 PUT方法</h4>
+<p>修改用户名为username的用户密码。</p>
+<h5 id="611">6.1.1 权限</h5>
+<ul>
+<li>本人</li>
+</ul>
+<h5 id="612">6.1.2 数据</h5>
+<pre><code class="json">{
+    old_password: String, //表示原来的密码
+    password: String //表示新密码
+}
+</code></pre>
+
+<h5 id="613">6.1.3 响应</h5>
+<ul>
+<li>200：修改成功</li>
+<li>400：数据不符合期望(前端应避免)或密码错误</li>
+</ul>
+<h2 id="_3">小组模块</h2>
+<p>小组用于组织一些用户进行讨论、比赛，由管理者进行管理。小组模块的主要功能有<strong>创建</strong>、<strong>查看</strong>、<strong>修改</strong>小组信息；<strong>审批</strong>、<strong>删除</strong>小组人员或者将小组成员<strong>提升为管理者</strong>、<strong>降为普通成员</strong>；<strong>添加</strong>、<strong>修改</strong>、<strong>删除</strong>比赛；用户<strong>申请</strong>、<strong>取消入组</strong>。</p>
+<h3 id="1-url-groups">1 URL: groups/</h3>
+<h4 id="11-get">1.1 GET方法</h4>
+<p>获取所有过审的小组信息，便于用户查看。</p>
+<h5 id="111_1">1.1.1 权限</h5>
+<ul>
+<li>任何人</li>
+</ul>
+<h5 id="112_1">1.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="113_1">1.1.3 返回</h5>
+<pre><code class="python">[
+    {
+        'name': '普及组',
+        'introduction': '在良辰的地盘，良辰有一百种办法 让你待不下去 。',
+        'reason': '良辰不介意陪你玩玩。',
+        'creator': 'moon',
+        'auto_pass': False,
+        'accept_application': True,
+        'id': 1,
+        'is_permitted': True,
+        'managers': ['sky', ],
+        'created_time': 'Mon, 14 Oct 2019 15:11:43 +0800',
+        'relation': 'created'
+    },
+    ...
+]
+</code></pre>
+
+<h4 id="12-post">1.2 POST方法</h4>
+<p>用户申请新建小组。</p>
+<h5 id="121">1.2.1 权限</h5>
+<ul>
+<li>已登录用户，即用户状态为“已登录”。</li>
+</ul>
+<h5 id="122">1.2.2 数据</h5>
+<pre><code class="json">{
+    name: String, //表示小组名
+    introduction: String, //表示简介
+    reason: String //表示申请理由
+}
+</code></pre>
+
+<h5 id="123">1.2.3 响应</h5>
+<ul>
+<li>201：创建成功</li>
+<li>400：数据不符合期望（前端应避免）</li>
+</ul>
+<h3 id="2-url-groupsapplying">2 URL: groups/applying/</h3>
+<h4 id="21-get">2.1 GET方法</h4>
+<p>获取所有申请创建的小组列表，便于超级用户对小组申请进行审批。</p>
+<h5 id="211_1">2.1.1 权限</h5>
+<ul>
+<li>超级用户</li>
+</ul>
+<h5 id="212_1">2.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="213_1">2.1.3 返回</h5>
+<pre><code class="python">[
+    {
+        'name': '提高组',
+         'introduction': '我赵日天第一个不服！',
+         'reason': '给我赵日天一个面子！',
+         'creator': 'sky',
+         'auto_pass': False,
+         'accept_application': True,
+         'id': 2,
+         'is_permitted': None,
+         'managers': ['sky', ],
+         'created_time': 'Mon, 14 Oct 2019 15:12:06 +0800'
+    },
+    ...
+]
+</code></pre>
+
+<h3 id="3-url-groupsgroup_id62">3 URL: groups/\&lt;group_id>/</h3>
+<h4 id="31-get_1">3.1 GET方法</h4>
+<p>返回目标id的小组信息。</p>
+<h5 id="311_1">3.1.1 权限</h5>
+<ul>
+<li>任何人</li>
+</ul>
+<h5 id="312_1">3.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="313_1">3.1.3 返回</h5>
+<pre><code class="python">{
+    'name': '普及组',
+    'introduction': '在良辰的地盘，良辰有一百种办法 让你待不下去 。',
+    'reason': '良辰不介意陪你玩玩。',
+    'creator': 'moon',
+    'auto_pass': False,
+    'accept_application': True,
+    'id': 1, 'is_permitted': True,
+    'managers': ['sky'],
+    'created_time': 'Mon, 14 Oct 2019 15:11:43 +0800',
+    'relation': 'idle'
+}
+</code></pre>
+
+<h4 id="32-put">3.2 PUT方法</h4>
+<p>修改目标id的小组信息，如果过审失败则可以靠此重新申请。</p>
+<h5 id="321">3.2.1 权限</h5>
+<ul>
+<li>创建者</li>
+<li>小组管理员</li>
+</ul>
+<h5 id="321_1">3.2.1 数据</h5>
+<pre><code class="json">{
+    name: String, //表示小组名
+    introduction: String, //表示简介
+    auto_pass: Boolean, //决定用户申请后是否会自动通过
+    accept_application: Boolean //决定是否允许用户主动申请加入
+}
+</code></pre>
+
+<p>注：<code>accept_application</code>设置为<code>False</code>即为只允许管理员邀请加入，设置为<code>True</code>后<code>auto_pass</code>设为<code>False</code>即为管理员验证加入，设为<code>True</code>即为允许任何人加入。</p>
+<h5 id="322">3.2.2 响应</h5>
+<ul>
+<li>200：修改成功</li>
+</ul>
+<h4 id="33-patch">3.3 PATCH方法</h4>
+<p>超级用户审批小组申请。</p>
+<h5 id="331">3.3.1 权限</h5>
+<ul>
+<li>超级用户</li>
+</ul>
+<h5 id="332">3.3.2 数据</h5>
+<pre><code class="json">{
+    permission: Boolean, //表示通过与否
+}
+</code></pre>
+
+<h5 id="333">3.3.3 响应</h5>
+<ul>
+<li>200：审批成功</li>
+<li>400：数据不符合期望（前端应避免）</li>
+</ul>
+<h4 id="34-delete">3.4 DELETE方法</h4>
+<p>创造者可以删除目标小组，无论它是否过审。</p>
+<h5 id="341">3.4.1 权限</h5>
+<ul>
+<li>创建者</li>
+</ul>
+<h5 id="342">3.4.2 响应</h5>
+<ul>
+<li>204：删除成功</li>
+</ul>
+<h3 id="4-url-usersapplications">4 URL: users/\<username>/applications/</h3>
+<h4 id="41-get_1">4.1 GET方法</h4>
+<p>用户获取自己的所有入组申请。</p>
+<h5 id="411_1">4.1.1 权限</h5>
+<ul>
+<li>本人</li>
+</ul>
+<h5 id="412_1">4.1.2 响应</h5>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h5 id="413_1">4.1.3 返回</h5>
+<pre><code class="python">[
+    {
+        'message': '我日天想会会你。',
+        'id': 1,
+        'user': {
+            'name': '赵日天',
+            'biography': '',
+            'school': '',
+            'department': '',
+            'sex': '保密',
+            'username': 'sky',
+            'email': 'sky@saiblo.com',
+            'email_md5': 'f3be03c754c5daf465a339ea9b537d7b',
+            'date_joined': 'Mon, 14 Oct 2019 15:10:52 +0800',
+            'id': 3,
+            'is_active': True
+        },
+        'time': 'Mon, 14 Oct 2019 23:35:29 +0800',
+        'group': 1,
+        'is_permitted': None
+    },
+    ...
+]
+</code></pre>
+
+<h3 id="5-url-usersapplications">5 URL: users/\<username>/applications/\<application_id>/</h3>
+<h4 id="get">GET</h4>
+<p>用户获取入组申请详情。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>本人</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<p><strong>返回</strong></p>
+<pre><code class="python">{
+    'message': '我日天想会会你。',
+    'id': 1, 
+    'user': {
+        'name': '赵日天', 
+        'biography': '', 
+        'school': '',
+        'department': '', 
+        'sex': '保密', 
+        'username': 'sky', 
+        'email': 'sky@saiblo.com',
+        'email_md5': 'f3be03c754c5daf465a339ea9b537d7b', 
+        'date_joined': 'Mon, 14 Oct 2019 15:10:52 +0800',
+        'id': 3, 
+        'is_active': True
+    }, 
+    'time': 'Mon, 14 Oct 2019 23:35:29 +0800', 
+    'group': 1,
+    'is_permitted': None
+}
+</code></pre>
+
+<h4 id="put">PUT</h4>
+<p>用户修改入组申请内容，在被拒绝后调用它会重新发起申请。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>本人</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>message: 字符串，表示申请理由</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：修改成功</li>
+<li>400：数据不符合期望（前端应避免）</li>
+</ul>
+<h4 id="patch">PATCH</h4>
+<p>同PUT</p>
+<h4 id="delete">DELETE</h4>
+<p>用户撤销或删除未通过的申请。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>本人</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>204：删除成功</li>
+</ul>
+<h3 id="groupsgroup_id62applications">groups/\&lt;group_id>/applications/</h3>
+<h4 id="get_1">GET</h4>
+<p>返回目标id的全部申请。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h4 id="post">POST</h4>
+<p>用户发起向目标小组的申请，要求小组已过审。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>已登录</li>
+<li>非成员</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>message: 字符串，表示申请理由</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>201：申请成功</li>
+<li>400：数据不符合期望（前端应避免）或用户已在组中</li>
+<li>403：小组禁制任何人加入</li>
+<li>404：小组未过审</li>
+</ul>
+<h3 id="groupsgroup_id62applicationsapplication_id62">groups/\&lt;group_id>/applications/\&lt;application_id>/</h3>
+<h4 id="get_2">GET</h4>
+<p>获取目标组的目标申请信息。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+<li>404：小组/申请不存在或申请不属于该小组</li>
+</ul>
+<h4 id="put_1">PUT</h4>
+<p>审批目标申请，需要小组管理员以上权限。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>permit：布尔值，表示是否通过申请</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>400：数据不符合期望（前端应避免）</li>
+<li>200：审批成功</li>
+</ul>
+<p><strong>PATCH</strong></p>
+<p>同PUT</p>
+<h4 id="delete_1">DELETE</h4>
+<p>删除(已被通过的冗余)目标申请。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>204：清除成功</li>
+</ul>
+<h3 id="groupsusers">groups/\<group_id>/users/</h3>
+<p><strong>GET</strong></p>
+<p>获取该组内所有成员（不包括创建者）的信息。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<h4 id="post_1">POST</h4>
+<p>向组内添加成员（注：现设定不需要经过同意）。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>username: 字符串，表示目标成员用户名</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>201：添加成功</li>
+<li>400：数据不符合期望（前端应避免）或用户不存在或用户已经在组中</li>
+</ul>
+<h3 id="groupsusers_1">groups/\<group_id>/users/\<username>/</h3>
+<h4 id="put_2">PUT</h4>
+<p>修改一个组员的管理员权限。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>创建者</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>management: bool，表示是否设为管理员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>201：修改成功</li>
+<li>400：数据不符合期望（前端应避免）</li>
+</ul>
+<h4 id="patch_1">PATCH</h4>
+<p>同PUT。</p>
+<h4 id="delete_2">DELETE</h4>
+<p>踢出一个组员或自己退组，需注意创建者无法通过此接口退群，否则会404，如果需要解散群请delete小组。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>更高权限或本人</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>204：踢出成功</li>
+</ul>
+<h3 id="groupsgroup_id62notices">groups/\&lt;group_id>/notices/</h3>
+<h4 id="get_3">GET</h4>
+<p>查看目标id小组所有公告，需要是小组成员(这一点可修改)。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>组成员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功，返回json数据</li>
+<li>404：小组未过审</li>
+</ul>
+<p><strong>返回</strong></p>
+<pre><code class="python">[
+    {
+        'title': '测试公告',
+        'content': '公告测试',
+        'group': 1, 
+        'last_editor': 'moon', 
+        'id': 1, 
+        'time': 'Mon, 14 Oct 2019 23:34:31 +0800',
+        'publisher': 'moon'
+    },
+]
+</code></pre>
+
+<h4 id="post_2">POST</h4>
+<p>发布新公告。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>需要有小组管理员以上权限</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>title: 字符串，表示公告标题</li>
+<li>content: 字符串，表示公告内容</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>201：发布成功</li>
+<li>400：数据不符合期望（前端应避免）</li>
+<li>404：小组未过审</li>
+</ul>
+<h3 id="groups">groups/\<group_id\>/notices/\<notice_id>/</h3>
+<h4 id="get_4">GET</h4>
+<p>获取目标id小组目标id公告内容。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>组成员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<p><strong>返回</strong></p>
+<pre><code class="python">{
+    'title': '测试公告',
+    'content': '公告测试',
+    'group': 1, 
+    'last_editor': 'moon', 
+    'id': 1, 
+    'time': 'Mon, 14 Oct 2019 23:34:31 +0800',
+    'publisher': 'moon'
+}
+</code></pre>
+
+<h4 id="put_3">PUT</h4>
+<p>修改目标id小组目标id公告内容。</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>数据</strong></p>
+<ul>
+<li>title: 字符串，表示修改后标题</li>
+<li>content: 字符串，表示修改后内容</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：修改成功</li>
+<li>400：数据不符合期望（前端应避免）</li>
+</ul>
+<h4 id="patch_2">PATCH</h4>
+<p>同PUT</p>
+<h4 id="deelte">DEELTE</h4>
+<p>删除目标id小组的目标id公告</p>
+<p><strong>权限</strong></p>
+<ul>
+<li>管理员</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>204：删除成功</li>
+</ul>
               
             </div>
           </div>
