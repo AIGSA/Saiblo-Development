@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>比赛系统 - Saiblo 平台开发维护手册</title>
+  <title>房间系统 - Saiblo 平台开发维护手册</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u6bd4\u8d5b\u7cfb\u7edf";
-    var mkdocs_page_input_path = "frontend\\website-frontend-contest.md";
+    var mkdocs_page_name = "\u623f\u95f4\u7cfb\u7edf";
+    var mkdocs_page_input_path = "frontend\\website-frontend-room.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -127,23 +127,9 @@
                     
     <a class="" href="../website-frontend-user/">用户系统</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">比赛系统</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#-">网站前端-比赛系统</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#group95slugcontest95idvue">group/_slug/contest/_id.vue</a></li>
-        
-            <li><a class="toctree-l4" href="#group95slugcontest95slug95ranklistvue">group/_slug/contest/_slug_/ranklist.vue</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../website-frontend-contest/">比赛系统</a>
                 </li>
                 <li class="">
                     
@@ -161,9 +147,21 @@
                     
     <a class="" href="../website-frontend-code/">代码系统</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../website-frontend-room/">房间系统</a>
+    <a class="current" href="./">房间系统</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#-">网站前端-房间系统</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#room95idvue">room/_id.vue</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -194,7 +192,7 @@
         
       
     
-    <li>比赛系统</li>
+    <li>房间系统</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -204,17 +202,16 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="-">网站前端-比赛系统</h1>
+                <h1 id="-">网站前端-房间系统</h1>
 <div class="toc">
 <ul>
-<li><a href="#-">网站前端-比赛系统</a><ul>
-<li><a href="#group95slugcontest95idvue">group/_slug/contest/_id.vue</a></li>
-<li><a href="#group95slugcontest95slug95ranklistvue">group/_slug/contest/_slug_/ranklist.vue</a></li>
+<li><a href="#-">网站前端-房间系统</a><ul>
+<li><a href="#room95idvue">room/_id.vue</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<h2 id="group95slugcontest95idvue">group/_slug/contest/_id.vue</h2>
+<h2 id="room95idvue">room/_id.vue</h2>
 <table>
 <thead>
 <tr>
@@ -225,11 +222,11 @@
 <tbody>
 <tr>
 <td>地址</td>
-<td><code>/group/&lt;group id&gt;/contest/&lt;contest id&gt;</code></td>
+<td><code>/room/&lt;room id&gt;</code></td>
 </tr>
 <tr>
 <td>用途</td>
-<td>查看 group id 小组下属的编号为 contest id 的比赛</td>
+<td>进入编号为 room id 的房间</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -237,7 +234,7 @@
 </tr>
 <tr>
 <td>预览</td>
-<td><img alt="" src="../imgs/group_slug_contest_id.PNG" /></td>
+<td><img alt="" src="../imgs/groups_id.PNG" /></td>
 </tr>
 </tbody>
 </table>
@@ -250,24 +247,56 @@
 </thead>
 <tbody>
 <tr>
-<td>caution</td>
-<td>切换我派遣的 AI 时，会弹出弹窗警告切换 AI 版本有扣分惩罚，caution 用于绑定弹窗的数据</td>
+<td>is_web_player</td>
+<td>说明当前用户是不是使用网页播放器</td>
 </tr>
 <tr>
-<td>contest</td>
-<td>比赛的详细信息，使用 asyncData 获取值</td>
+<td>play_web_player</td>
+<td>说明是不是需要播放网页播放器</td>
 </tr>
 <tr>
-<td>contest.game</td>
-<td>比赛使用的游戏的信息</td>
+<td>room_game_id</td>
+<td>指明当前房间游玩的游戏编号</td>
 </tr>
 <tr>
-<td>contest.group</td>
-<td>比赛所属的小组的信息</td>
+<td>web_socket</td>
+<td>与评测端交互用的 Websocket</td>
 </tr>
 <tr>
-<td>contest.entity</td>
-<td>在比赛中本用户派遣的 ai</td>
+<td>server</td>
+<td>存储与评测端的连接的一些信息，open 表示是否开启连接，failures 表示失败重连的次数等等</td>
+</tr>
+<tr>
+<td>look</td>
+<td>存储一个用以查看某些信息的小窗口的参数</td>
+</tr>
+<tr>
+<td>room</td>
+<td>存储整个房间的信息，例如玩家 players，游戏 game，房主 host，观战用户 users 等等</td>
+</tr>
+<tr>
+<td>room_editor</td>
+<td>用于存储修改的房间信息</td>
+</tr>
+<tr>
+<td>chat</td>
+<td>聊天室数据</td>
+</tr>
+<tr>
+<td>my_entities</td>
+<td>存储用户自己在当前房间中可用的 AI 信息</td>
+</tr>
+<tr>
+<td>code_selector</td>
+<td>存储用户选择的 AI 信息，用以将 AI 加入到房间中</td>
+</tr>
+<tr>
+<td>iframe</td>
+<td>网页播放器的参数</td>
+</tr>
+<tr>
+<td>configs</td>
+<td>房间内游戏参数的配置</td>
 </tr>
 </tbody>
 </table>
@@ -282,147 +311,166 @@
 </thead>
 <tbody>
 <tr>
-<td>total/progress</td>
+<td>tryAutoStart</td>
 <td>null</td>
 <td>null</td>
-<td>用于维护比赛的进度条</td>
+<td>尝试自动启动一局游戏，为快速开始人机对局所使用的函数</td>
 </tr>
 <tr>
-<td>getTime</td>
-<td>以 ms 为单位的时间</td>
-<td>可读时间表示</td>
-<td>转换时间表示方法</td>
+<td>haveALook</td>
+<td>message, title, content</td>
+<td>null</td>
+<td>用一个小窗口查看目标信息</td>
 </tr>
 <tr>
-<td>updateTime</td>
+<td>clearWebSocket</td>
 <td>null</td>
 <td>null</td>
-<td>在 vue 生命周期的 create 阶段创建计时器，每隔 1s 计时器响应一次，并调用 updateTime，用于根据时间维护未开始/进行中/已结束的比赛状态</td>
+<td>清除与评测端连接的 Websocket</td>
+</tr>
+<tr>
+<td>initWebSocket</td>
+<td>null</td>
+<td>null</td>
+<td>初始化与评测端连接的 Websocket</td>
+</tr>
+<tr>
+<td>webSocketOnOpen</td>
+<td>null</td>
+<td>null</td>
+<td>与评测端连接后所调用的函数</td>
+</tr>
+<tr>
+<td>webSocketOnMessage</td>
+<td>event</td>
+<td>null</td>
+<td>收到由评测端发送的信息时调用的处理函数</td>
+</tr>
+<tr>
+<td>sendMessage</td>
+<td>data</td>
+<td>null</td>
+<td>向评测端发送数据</td>
+</tr>
+<tr>
+<td>getUserByUsername</td>
+<td>users, username</td>
+<td>user</td>
+<td>从 users 中通过 username 找到目标 user 并返回信息</td>
+</tr>
+<tr>
+<td>getGameById</td>
+<td>id</td>
+<td>game</td>
+<td>从 games 中通过 id 找到对应的 game 并返回信息</td>
+</tr>
+<tr>
+<td>getEntityById</td>
+<td>entities, id</td>
+<td>entity</td>
+<td>从 entities 中通过 id 找到目标 entity 并返回信息</td>
+</tr>
+<tr>
+<td>getCodeById</td>
+<td>codes, id</td>
+<td>code</td>
+<td>从 codes 中通过 id 找到目标 code 并返回信息</td>
+</tr>
+<tr>
+<td>loadStatus</td>
+<td>data</td>
+<td>null</td>
+<td>从评测端收到房间信息后加载房间信息</td>
+</tr>
+<tr>
+<td>joinSeat</td>
+<td>index</td>
+<td>null</td>
+<td>让当前用户加入房间的某一个座位上</td>
+</tr>
+<tr>
+<td>quitSeat</td>
+<td>index</td>
+<td>null</td>
+<td>让当前用户退出他所占据的座位</td>
+</tr>
+<tr>
+<td>saveGameConfigs</td>
+<td>null</td>
+<td>null</td>
+<td>房主保存对游戏的配置信息，将其发送给评测端</td>
+</tr>
+<tr>
+<td>initCodeSelector</td>
+<td>seat</td>
+<td>null</td>
+<td>初始化 seat 位置上的 AI 选择器，以便用户选择一个 AI 进行加入</td>
 </tr>
 <tr>
 <td>selectCode</td>
-<td>代码分支对象</td>
-<td>null</td>
-<td>选择 AI 的版本进行派遣</td>
-</tr>
-<tr>
-<td>cancelCode</td>
-<td>比赛对象</td>
-<td>null</td>
-<td>向服务器发送请求取消该比赛派遣的 AI</td>
-</tr>
-<tr>
-<td>openCaution</td>
-<td>警告文本</td>
-<td>null</td>
-<td>如果已经派遣了 AI，在更换 AI 时会弹出排行榜降分警告</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>依赖部件</th>
-<th>传入部件参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>codeSelector</td>
-<td>比赛名，用户名，游戏，原始 AI 版本等数据</td>
-</tr>
-</tbody>
-</table>
-<h2 id="group95slugcontest95slug95ranklistvue">group/_slug/contest/_slug_/ranklist.vue</h2>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>地址</td>
-<td><code>/group/&lt;group id&gt;/contest/&lt;contest id&gt;/ranklist</code></td>
-</tr>
-<tr>
-<td>用途</td>
-<td>查看 group id 小组下属的编号为 contest id 的比赛的排行榜</td>
-</tr>
-<tr>
-<td>权限</td>
-<td>登录用户</td>
-</tr>
-<tr>
-<td>预览</td>
-<td><img alt="" src="../imgs/group_slug_contest_id_ranklist.PNG" /></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>timer_</td>
-<td>定时器，每隔 1s 更新一次</td>
-</tr>
-<tr>
-<td>contest</td>
-<td>该排行榜对应的比赛的详细信息，使用 asyncData 获取值</td>
-</tr>
-<tr>
-<td>players</td>
-<td>排行榜中每个玩家的信息，包括得分，username，AI 分支和版本号</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>参数</th>
-<th>返回值</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>getTime</td>
-<td>以 ms 为单位的时间</td>
-<td>可读格式的时间表示</td>
-<td>转化时间格式为可读表示</td>
-</tr>
-<tr>
-<td>updateTime</td>
 <td>null</td>
 <td>null</td>
-<td>计时器更新时调用，更新当前时间，主要用于已结束/进行中/未开始的比赛状态维护</td>
+<td>用户确认选择一个 AI，并将其加入到选择的座位上</td>
 </tr>
 <tr>
-<td>updateRanklist</td>
+<td>startGame</td>
 <td>null</td>
 <td>null</td>
-<td>向服务器发送请求更新当前的排行榜，原本设计成定时更新，后来舍弃</td>
+<td>房主开始游戏</td>
 </tr>
-</tbody>
-</table>
-<table>
-<thead>
 <tr>
-<th>依赖部件</th>
-<th>传入部件参数</th>
+<td>postMessage</td>
+<td>null</td>
+<td>null</td>
+<td>发送聊天信息</td>
 </tr>
-</thead>
-<tbody>
 <tr>
-<td>ranklist</td>
-<td>players，当前排行榜的数据</td>
+<td>receiveMessage</td>
+<td>data</td>
+<td>null</td>
+<td>收取聊天信息进行显示</td>
+</tr>
+<tr>
+<td>getMyEntities</td>
+<td>game_id</td>
+<td>null</td>
+<td>获取用户在游戏编号为 game_id 的所有可用 AI 以供用户选择</td>
+</tr>
+<tr>
+<td>getMyEntity</td>
+<td>entity_id</td>
+<td>entity</td>
+<td>通过 entity_id 获取用户的 entity</td>
+</tr>
+<tr>
+<td>getMyCode</td>
+<td>entity, code_id</td>
+<td>code</td>
+<td>通过 code_id 来获取 entity 中的某份 code</td>
+</tr>
+<tr>
+<td>onLoad</td>
+<td>null</td>
+<td>null</td>
+<td>网页播放器加载好后调用的初始化函数</td>
+</tr>
+<tr>
+<td>initPlayer</td>
+<td>null</td>
+<td>null</td>
+<td>初始化网页播放器</td>
+</tr>
+<tr>
+<td>iframePostMessage</td>
+<td>data</td>
+<td>null</td>
+<td>向网页播放器发送信息请求其初始化，或者是重新加载等等</td>
+</tr>
+<tr>
+<td>iframeReceiveMessage</td>
+<td>event</td>
+<td>null</td>
+<td>收到由网页播放器发回的信息，对其进行处理</td>
 </tr>
 </tbody>
 </table>
@@ -433,10 +481,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../website-frontend-game/" class="btn btn-neutral float-right" title="游戏系统">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../website-frontend-user/" class="btn btn-neutral" title="用户系统"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../website-frontend-code/" class="btn btn-neutral" title="代码系统"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -462,10 +508,8 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../website-frontend-user/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../website-frontend-code/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../website-frontend-game/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

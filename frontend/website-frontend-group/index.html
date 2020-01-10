@@ -148,9 +148,9 @@
         
             <li><a class="toctree-l4" href="#admin_groupsvue">admin_groups.vue</a></li>
         
-            <li><a class="toctree-l4" href="#groups_idvue">groups/_id.vue</a></li>
+            <li><a class="toctree-l4" href="#groups95idvue">groups/_id.vue</a></li>
         
-            <li><a class="toctree-l4" href="#groups_slugmanagevue">groups/_slug/manage.vue</a></li>
+            <li><a class="toctree-l4" href="#groups95slugmanagevue">groups/_slug/manage.vue</a></li>
         
         </ul>
     
@@ -164,6 +164,10 @@
                 <li class="">
                     
     <a class="" href="../website-frontend-code/">代码系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-room/">房间系统</a>
                 </li>
     </ul>
 	    </li>
@@ -210,8 +214,8 @@
 <li><a href="#-">网站前端-小组系统</a><ul>
 <li><a href="#groupsvue">groups.vue</a></li>
 <li><a href="#admin_groupsvue">admin_groups.vue</a></li>
-<li><a href="#groups_idvue">groups/_id.vue</a></li>
-<li><a href="#groups_slugmanagevue">groups/_slug/manage.vue</a></li>
+<li><a href="#groups95idvue">groups/_id.vue</a></li>
+<li><a href="#groups95slugmanagevue">groups/_slug/manage.vue</a></li>
 </ul>
 </li>
 </ul>
@@ -253,7 +257,7 @@
 <tbody>
 <tr>
 <td>show_modal</td>
-<td>在点击创建小组后，show_modal设置为true，用于显示创建小组的弹出窗体</td>
+<td>在点击创建小组后，show_modal 设置为 true，用于显示创建小组的弹出窗体</td>
 </tr>
 <tr>
 <td>group_form</td>
@@ -261,23 +265,23 @@
 </tr>
 <tr>
 <td>isLoading</td>
-<td>加载中，在提交表单之后，等待服务器返回创建小组表格结果之间为True</td>
+<td>加载中，在提交表单之后，等待服务器返回创建小组表格结果之间为 True</td>
 </tr>
 <tr>
 <td>isOK</td>
-<td>服务器返回提交创建申请成功后，isOK为True</td>
+<td>服务器返回提交创建申请成功后，isOK 为 True</td>
 </tr>
 <tr>
 <td>err_code</td>
-<td>服务器返回提交创建申请失败后，err_code设为response的错误码</td>
+<td>服务器返回提交创建申请失败后，err_code 设为 response 的错误码</td>
 </tr>
 <tr>
 <td>groups</td>
-<td>页面中显示的所有小组，是从获取的所有小组origin_groups中筛选出与搜索小组名keyWord相关的所有小组</td>
+<td>页面中显示的所有小组，是从获取的所有小组 origin_groups 中筛选出与搜索小组名 keyWord 相关的所有小组</td>
 </tr>
 <tr>
 <td>origin_groups</td>
-<td>从服务器获取到的所有的小组，使用AsyncData获取值</td>
+<td>从服务器获取到的所有的小组，使用 AsyncData 获取值</td>
 </tr>
 <tr>
 <td>keyWord</td>
@@ -323,25 +327,25 @@
 <td>show</td>
 <td>null</td>
 <td>null</td>
-<td>点击创建小组时，设置isLoading和isOK的初值（可能连续创建多个小组）</td>
+<td>点击创建小组时，设置 isLoading 和 isOK 的初值（可能连续创建多个小组）</td>
 </tr>
 <tr>
 <td>create_groups</td>
 <td>null</td>
 <td>null</td>
-<td>点击创建小组弹出窗口中的提交按钮后会调用此函数，首先进行Vuelidate验证小组名，简介，理由是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
+<td>点击创建小组弹出窗口中的提交按钮后会调用此函数，首先进行 Vuelidate 验证小组名，简介，理由是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
 </tr>
 <tr>
 <td>searchKeyWord</td>
 <td>null</td>
 <td>null</td>
-<td>使用origin_groups和keyWord来更新groups的值</td>
+<td>使用 origin_groups 和 keyWord 来更新 groups 的值</td>
 </tr>
 <tr>
 <td>keyWordFilter</td>
 <td>使用关键字筛选小组时的判定方式</td>
 <td>判定结果</td>
-<td>协助searchKeyWord进行筛选</td>
+<td>协助 searchKeyWord 进行筛选</td>
 </tr>
 <tr>
 <td>group_permission</td>
@@ -361,7 +365,7 @@
 <tbody>
 <tr>
 <td>confirm-button</td>
-<td>确认退出时弹出的消息，调用quit(group)函数之前弹出确认信息</td>
+<td>确认退出时弹出的消息，调用 quit(group)函数之前弹出确认信息</td>
 </tr>
 </tbody>
 </table>
@@ -402,15 +406,15 @@
 <tbody>
 <tr>
 <td>group_modal</td>
-<td>在小组申请列表中，点击组名，可以查看这条申请的详细信息，弹出窗口中的数据绑定到group_modal上</td>
+<td>在小组申请列表中，点击组名，可以查看这条申请的详细信息，弹出窗口中的数据绑定到 group_modal 上</td>
 </tr>
 <tr>
 <td>applying_groups</td>
-<td>使用asyncData获取值，表示所有创建小组的申请</td>
+<td>使用 asyncData 获取值，表示所有创建小组的申请</td>
 </tr>
 <tr>
 <td>approved_groups</td>
-<td>使用asyncData获取值，表示所有已经通过申请的小组</td>
+<td>使用 asyncData 获取值，表示所有已经通过申请的小组</td>
 </tr>
 </tbody>
 </table>
@@ -428,7 +432,7 @@
 <td>read_detail</td>
 <td>申请编号，小组姓名，小组简介，申请理由</td>
 <td>null</td>
-<td>将想阅读详细信息的申请的数据绑定到group_modal上，用于弹窗显示（好像实现麻烦了）</td>
+<td>将想阅读详细信息的申请的数据绑定到 group_modal 上，用于弹窗显示（好像实现麻烦了）</td>
 </tr>
 <tr>
 <td>approve</td>
@@ -450,7 +454,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="groups_idvue">groups/_id.vue</h2>
+<h2 id="groups95idvue">groups/_id.vue</h2>
 <table>
 <thead>
 <tr>
@@ -465,7 +469,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>查看编号为group id的小组的详细信息</td>
+<td>查看编号为 group id 的小组的详细信息</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -487,23 +491,23 @@
 <tbody>
 <tr>
 <td>notice</td>
-<td>在公告列表中，点击某条公告，可以查看这条公告的详细信息，弹出窗口中的数据绑定到notice上</td>
+<td>在公告列表中，点击某条公告，可以查看这条公告的详细信息，弹出窗口中的数据绑定到 notice 上</td>
 </tr>
 <tr>
 <td>contests</td>
-<td>该小组下属所有比赛，使用asyncData获取值</td>
+<td>该小组下属所有比赛，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>isLoading</td>
-<td>在向服务器发送申请加入小组/取消申请/退出小组时，设为True，表示正在发送请求</td>
+<td>在向服务器发送申请加入小组/取消申请/退出小组时，设为 True，表示正在发送请求</td>
 </tr>
 <tr>
 <td>caution</td>
-<td>在比赛列表中选择切换AI时会弹出提醒窗口，提醒用户扣分惩罚，弹出窗口的数据绑定到caution上</td>
+<td>在比赛列表中选择切换 AI 时会弹出提醒窗口，提醒用户扣分惩罚，弹出窗口的数据绑定到 caution 上</td>
 </tr>
 <tr>
 <td>group</td>
-<td>小组对象，通过地址中小组编号向服务器请求后获取，使用asyncData获取值</td>
+<td>小组对象，通过地址中小组编号向服务器请求后获取，使用 asyncData 获取值</td>
 </tr>
 </tbody>
 </table>
@@ -519,21 +523,21 @@
 <tbody>
 <tr>
 <td>read_notice</td>
-<td>选中的通知的id</td>
+<td>选中的通知的 id</td>
 <td>null</td>
-<td>点击通知查看详情时调用，根据notice id判断是哪条通知，将详细信息绑定到notice上</td>
+<td>点击通知查看详情时调用，根据 notice id 判断是哪条通知，将详细信息绑定到 notice 上</td>
 </tr>
 <tr>
 <td>apply/cancel/quit</td>
 <td>null</td>
 <td>null</td>
-<td>与groups.vue中使用方法相同</td>
+<td>与 groups.vue 中使用方法相同</td>
 </tr>
 <tr>
 <td>selectCode</td>
 <td>选中的比赛对象，选中的代码分支</td>
 <td>null</td>
-<td>修改向某比赛派遣的AI的分支，或是向某比赛派遣新分支</td>
+<td>修改向某比赛派遣的 AI 的分支，或是向某比赛派遣新分支</td>
 </tr>
 <tr>
 <td>cancelCode</td>
@@ -545,7 +549,7 @@
 <td>openCaution</td>
 <td>message</td>
 <td>null</td>
-<td>在更换派遣AI或是取消派遣时，弹出积分惩罚的弹窗</td>
+<td>在更换派遣 AI 或是取消派遣时，弹出积分惩罚的弹窗</td>
 </tr>
 <tr>
 <td>依赖部件</td>
@@ -567,7 +571,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="groups_slugmanagevue">groups/_slug/manage.vue</h2>
+<h2 id="groups95slugmanagevue">groups/_slug/manage.vue</h2>
 <table>
 <thead>
 <tr>
@@ -582,7 +586,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>管理小组编号为group id的小组的信息，包括加入权限，发布公告，成员管理，比赛管理等等</td>
+<td>管理小组编号为 group id 的小组的信息，包括加入权限，发布公告，成员管理，比赛管理等等</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -604,7 +608,7 @@
 <tbody>
 <tr>
 <td>group</td>
-<td>小组对象，通过地址中小组编号向服务器请求后获取，使用asyncData获取值</td>
+<td>小组对象，通过地址中小组编号向服务器请求后获取，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>competition_editor</td>
@@ -616,7 +620,7 @@
 </tr>
 <tr>
 <td>competition_editor.isLoading</td>
-<td>正在向服务器提交competition_editor.competition表单</td>
+<td>正在向服务器提交 competition_editor.competition 表单</td>
 </tr>
 <tr>
 <td>competition_editor.isOK</td>
@@ -624,7 +628,7 @@
 </tr>
 <tr>
 <td>competition_editor.err_code</td>
-<td>提交表单失败，err_code设为响应的status code</td>
+<td>提交表单失败，err_code 设为响应的 status code</td>
 </tr>
 <tr>
 <td>competition_editor.create</td>
@@ -632,7 +636,7 @@
 </tr>
 <tr>
 <td>competition_editor.game_options</td>
-<td>所有已经部署的游戏列表，用来实现表格弹窗中的下拉菜单，使用asyncData获取值</td>
+<td>所有已经部署的游戏列表，用来实现表格弹窗中的下拉菜单，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>info</td>
@@ -644,7 +648,7 @@
 </tr>
 <tr>
 <td>notice_form.notices</td>
-<td>所有公告，使用asyncData获取值</td>
+<td>所有公告，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>notice_form.modal</td>
@@ -656,15 +660,15 @@
 </tr>
 <tr>
 <td>competitions</td>
-<td>所有该小组的比赛，使用asyncData获取值</td>
+<td>所有该小组的比赛，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>applications</td>
-<td>所有加入该小组的申请，使用asyncData获取值</td>
+<td>所有加入该小组的申请，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>members</td>
-<td>所有小组内的成员，使用asyncData获取值</td>
+<td>所有小组内的成员，使用 asyncData 获取值</td>
 </tr>
 <tr>
 <td>id</td>
@@ -686,7 +690,7 @@
 <td>modifyInfo</td>
 <td>null</td>
 <td>null</td>
-<td>点击小组信息中的确认修改按钮后会调用此函数，首先进行Vuelidate验证小组名，简介是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
+<td>点击小组信息中的确认修改按钮后会调用此函数，首先进行 Vuelidate 验证小组名，简介是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
 </tr>
 <tr>
 <td>formatContests</td>
@@ -710,17 +714,17 @@
 <td>submit_competition_editor</td>
 <td>null</td>
 <td>null</td>
-<td>editCompetition调用，用于提交弹窗表格到服务器上，首先进行Vuelidate验证比赛名，简介是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
+<td>editCompetition 调用，用于提交弹窗表格到服务器上，首先进行 Vuelidate 验证比赛名，简介是否符合规范，然后将表单发送给服务器等待服务器确认表格提交成功与否，如果表格提交成功，关闭弹出窗口并显示成功信息</td>
 </tr>
 <tr>
 <td>editCompetition</td>
 <td>要编辑的比赛</td>
 <td>null</td>
-<td>在比赛编辑选项卡点击某比赛后面的修改时调用，设置competition_editor.create，然后将数据传给competition_editor.competition，调用submit_competition_editor</td>
+<td>在比赛编辑选项卡点击某比赛后面的修改时调用，设置 competition_editor.create，然后将数据传给 competition_editor.competition，调用 submit_competition_editor</td>
 </tr>
 <tr>
 <td>handleApplication</td>
-<td>要处理的申请的id，通过/拒绝</td>
+<td>要处理的申请的 id，通过/拒绝</td>
 <td>null</td>
 <td>管理成员选项卡中申请列表里，选通过或拒绝时调用，将处理申请的结果提交给服务器</td>
 </tr>

@@ -142,13 +142,13 @@
         
             <li><a class="toctree-l4" href="#gamesvue">games.vue</a></li>
         
-            <li><a class="toctree-l4" href="#game_idvue">game/_id.vue</a></li>
+            <li><a class="toctree-l4" href="#game95idvue">game/_id.vue</a></li>
         
-            <li><a class="toctree-l4" href="#game_slugeditvue">game/_slug/edit.vue</a></li>
+            <li><a class="toctree-l4" href="#game95slugeditvue">game/_slug/edit.vue</a></li>
         
-            <li><a class="toctree-l4" href="#game_slugranklistvue">game/_slug/ranklist.vue</a></li>
+            <li><a class="toctree-l4" href="#game95slugranklistvue">game/_slug/ranklist.vue</a></li>
         
-            <li><a class="toctree-l4" href="#match_idvue">match/_id.vue</a></li>
+            <li><a class="toctree-l4" href="#match95idvue">match/_id.vue</a></li>
         
         </ul>
     
@@ -166,6 +166,10 @@
                 <li class="">
                     
     <a class="" href="../website-frontend-code/">代码系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-room/">房间系统</a>
                 </li>
     </ul>
 	    </li>
@@ -211,10 +215,10 @@
 <ul>
 <li><a href="#-">网站前端-游戏系统</a><ul>
 <li><a href="#gamesvue">games.vue</a></li>
-<li><a href="#game_idvue">game/_id.vue</a></li>
-<li><a href="#game_slugeditvue">game/_slug/edit.vue</a></li>
-<li><a href="#game_slugranklistvue">game/_slug/ranklist.vue</a></li>
-<li><a href="#match_idvue">match/_id.vue</a></li>
+<li><a href="#game95idvue">game/_id.vue</a></li>
+<li><a href="#game95slugeditvue">game/_slug/edit.vue</a></li>
+<li><a href="#game95slugranklistvue">game/_slug/ranklist.vue</a></li>
+<li><a href="#match95idvue">match/_id.vue</a></li>
 </ul>
 </li>
 </ul>
@@ -256,11 +260,11 @@
 <tbody>
 <tr>
 <td>games</td>
-<td>所有游戏，使用asyncData获取</td>
+<td>所有游戏，使用 asyncData 获取</td>
 </tr>
 <tr>
 <td>modal</td>
-<td>之前设计时点击游戏详情会弹出弹窗，数据来自于modal，但是这个功能被屏蔽了</td>
+<td>之前设计时点击游戏详情会弹出弹窗，数据来自于 modal，但是这个功能被屏蔽了</td>
 </tr>
 </tbody>
 </table>
@@ -282,7 +286,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="game_idvue">game/_id.vue</h2>
+<h2 id="game95idvue">game/_id.vue</h2>
 <table>
 <thead>
 <tr>
@@ -297,7 +301,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>查看编号为game id的游戏的详细信息</td>
+<td>查看编号为 game id 的游戏的详细信息</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -323,7 +327,7 @@
 </tr>
 <tr>
 <td>game</td>
-<td>该游戏详情页面对应的游戏的数据，使用asyncData获取值</td>
+<td>该游戏详情页面对应的游戏的数据，使用 asyncData 获取值</td>
 </tr>
 </tbody>
 </table>
@@ -359,7 +363,7 @@
 <td>introductionHTML</td>
 <td>null</td>
 <td>null</td>
-<td>将markdown格式的introduction转化为html格式，在网页上进行富文本显示</td>
+<td>将 markdown 格式的 introduction 转化为 html 格式，在网页上进行富文本显示</td>
 </tr>
 </tbody>
 </table>
@@ -381,7 +385,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="game_slugeditvue">game/_slug/edit.vue</h2>
+<h2 id="game95slugeditvue">game/_slug/edit.vue</h2>
 <table>
 <thead>
 <tr>
@@ -396,7 +400,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>修改编号为game id的游戏的详细信息</td>
+<td>修改编号为 game id 的游戏的详细信息</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -418,7 +422,7 @@
 <tbody>
 <tr>
 <td>form</td>
-<td>修改游戏详情提交的表单，使用asyncData获取初值</td>
+<td>修改游戏详情提交的表单，使用 asyncData 获取初值</td>
 </tr>
 <tr>
 <td>isLoading</td>
@@ -430,11 +434,11 @@
 </tr>
 <tr>
 <td>err_code</td>
-<td>提交表单失败时，设置为响应的status code</td>
+<td>提交表单失败时，设置为响应的 status code</td>
 </tr>
 <tr>
 <td>game</td>
-<td>当前选中游戏的详细信息，使用asyncData获取值</td>
+<td>当前选中游戏的详细信息，使用 asyncData 获取值</td>
 </tr>
 </tbody>
 </table>
@@ -462,7 +466,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="game_slugranklistvue">game/_slug/ranklist.vue</h2>
+<h2 id="game95slugranklistvue">game/_slug/ranklist.vue</h2>
 <table>
 <thead>
 <tr>
@@ -477,7 +481,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>查看编号为game id游戏绑定的排行榜</td>
+<td>查看编号为 game id 游戏绑定的排行榜</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -499,11 +503,11 @@
 <tbody>
 <tr>
 <td>game</td>
-<td>当前排行榜对应游戏的信息，使用asyncData获取</td>
+<td>当前排行榜对应游戏的信息，使用 asyncData 获取</td>
 </tr>
 <tr>
 <td>players</td>
-<td>排行榜中每个玩家的信息，包括得分，username，AI分支和版本号</td>
+<td>排行榜中每个玩家的信息，包括得分，username，AI 分支和版本号</td>
 </tr>
 </tbody>
 </table>
@@ -525,7 +529,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="match_idvue">match/_id.vue</h2>
+<h2 id="match95idvue">match/_id.vue</h2>
 <table>
 <thead>
 <tr>
@@ -540,7 +544,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>查看对局编号为match id的对局详情，如果有HTML播放器则回放</td>
+<td>查看对局编号为 match id 的对局详情，如果有 HTML 播放器则回放</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -549,6 +553,106 @@
 <tr>
 <td>预览</td>
 <td><img alt="" src="../imgs/match_id.PNG" /></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iframe</td>
+<td>存储网页播放器的一些参数，例如是否全屏，网页播放器地址等等</td>
+</tr>
+<tr>
+<td>match</td>
+<td>存储的是当前游戏的玩家、游戏等信息，用 asyncData 获取</td>
+</tr>
+<tr>
+<td>player_controller</td>
+<td>存储的是控制播放器的一些参数，例如播放速度、当前帧等等</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>参数</th>
+<th>返回值</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>download_replay</td>
+<td>id</td>
+<td>null</td>
+<td>用于生成一个下载链接，使用户能够下载回放文件</td>
+</tr>
+<tr>
+<td>onLoad</td>
+<td>null</td>
+<td>null</td>
+<td>在播放器加载好后初始化播放器</td>
+</tr>
+<tr>
+<td>postMessage</td>
+<td>data</td>
+<td>null</td>
+<td>向播放器发送指令和数据</td>
+</tr>
+<tr>
+<td>receiveMessage</td>
+<td>event</td>
+<td>null</td>
+<td>从播放器收到信息并进行处理</td>
+</tr>
+<tr>
+<td>playerLoadFrame</td>
+<td>null</td>
+<td>null</td>
+<td>让播放器载入控制器的当前帧</td>
+</tr>
+<tr>
+<td>playerLoadNextFrame</td>
+<td>null</td>
+<td>null</td>
+<td>让播放器载入控制器的下一帧</td>
+</tr>
+<tr>
+<td>previousFrame</td>
+<td>null</td>
+<td>null</td>
+<td>控制器载入前一帧</td>
+</tr>
+<tr>
+<td>nextFrame</td>
+<td>null</td>
+<td>null</td>
+<td>控制器载入后一帧</td>
+</tr>
+<tr>
+<td>playNextFrame</td>
+<td>null</td>
+<td>null</td>
+<td>控制器播放下一帧(播放将是连续的)</td>
+</tr>
+<tr>
+<td>changeSpeed</td>
+<td>null</td>
+<td>null</td>
+<td>将控制器播放速度设置成下一档</td>
+</tr>
+<tr>
+<td>resetPlayer</td>
+<td>null</td>
+<td>null</td>
+<td>重置控制器到初始帧</td>
 </tr>
 </tbody>
 </table>

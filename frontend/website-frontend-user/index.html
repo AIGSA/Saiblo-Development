@@ -144,7 +144,7 @@
         
             <li><a class="toctree-l4" href="#edit_profilevue">edit_profile.vue</a></li>
         
-            <li><a class="toctree-l4" href="#user_idvue">user/_id.vue</a></li>
+            <li><a class="toctree-l4" href="#user95idvue">user/_id.vue</a></li>
         
         </ul>
     
@@ -170,6 +170,10 @@
                 <li class="">
                     
     <a class="" href="../website-frontend-code/">代码系统</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-frontend-room/">房间系统</a>
                 </li>
     </ul>
 	    </li>
@@ -220,7 +224,7 @@
 <li><a href="#reset_passwordvue">reset_password.vue</a></li>
 <li><a href="#profilevue">profile.vue</a></li>
 <li><a href="#edit_profilevue">edit_profile.vue</a></li>
-<li><a href="#user_idvue">user/_id.vue</a></li>
+<li><a href="#user95idvue">user/_id.vue</a></li>
 </ul>
 </li>
 </ul>
@@ -270,15 +274,15 @@
 </tr>
 <tr>
 <td>isLoading</td>
-<td>加载中，在提交表单之后，等待服务器返回登录结果之间为True</td>
+<td>加载中，在提交表单之后，等待服务器返回登录结果之间为 True</td>
 </tr>
 <tr>
 <td>isOK</td>
-<td>服务器返回登录成功后，isOK为True</td>
+<td>服务器返回登录成功后，isOK 为 True</td>
 </tr>
 <tr>
 <td>err_code</td>
-<td>服务器返回登录失败后，err_code设为response的错误码</td>
+<td>服务器返回登录失败后，err_code 设为 response 的错误码</td>
 </tr>
 </tbody>
 </table>
@@ -296,7 +300,7 @@
 <td>login</td>
 <td>null</td>
 <td>null</td>
-<td>点击登录按钮后会调用此函数，首先进行Vuelidate验证是否输入了用户名和密码，然后将表单发送给服务器等待服务器确认登录成功与否，如果登录成功，跳转到网站首页（使用nuxt.js 的loginWith实现，默认行为）</td>
+<td>点击登录按钮后会调用此函数，首先进行 Vuelidate 验证是否输入了用户名和密码，然后将表单发送给服务器等待服务器确认登录成功与否，如果登录成功，跳转到网站首页（使用 nuxt.js 的 loginWith 实现，默认行为）</td>
 </tr>
 </tbody>
 </table>
@@ -353,15 +357,15 @@
 </tr>
 <tr>
 <td>isLoading</td>
-<td>加载中，在提交表单之后，等待服务器返回登录结果之间为True</td>
+<td>加载中，在提交表单之后，等待服务器返回登录结果之间为 True</td>
 </tr>
 <tr>
 <td>isOK</td>
-<td>服务器返回登录成功后，isOK为True</td>
+<td>服务器返回登录成功后，isOK 为 True</td>
 </tr>
 <tr>
 <td>err_code</td>
-<td>服务器返回登录失败后，err_code设为response的错误码</td>
+<td>服务器返回登录失败后，err_code 设为 response 的错误码</td>
 </tr>
 </tbody>
 </table>
@@ -379,7 +383,7 @@
 <td>register</td>
 <td>null</td>
 <td>null</td>
-<td>点击注册按钮后会调用此函数，首先进行Vuelidate验证用户名，密码，邮箱格式是否正确，确认密码是否与密码一致，然后将表单发送给服务器等待服务器确认注册成功与否，如果注册成功，显示1s的注册成功消息栏并在1s后跳转到登录界面</td>
+<td>点击注册按钮后会调用此函数，首先进行 Vuelidate 验证用户名，密码，邮箱格式是否正确，确认密码是否与密码一致，然后将表单发送给服务器等待服务器确认注册成功与否，如果注册成功，显示 1s 的注册成功消息栏并在 1s 后跳转到登录界面</td>
 </tr>
 </tbody>
 </table>
@@ -410,7 +414,7 @@
 </tr>
 </tbody>
 </table>
-<p>TODO：邮箱服务器没搞定，zah说上线前再修</p>
+<p>TODO：邮箱服务器没搞定，zah 说上线前再修</p>
 <h2 id="reset_passwordvue">reset_password.vue</h2>
 <table>
 <thead>
@@ -438,7 +442,7 @@
 </tr>
 </tbody>
 </table>
-<p>TODO：邮箱服务器没搞定，zah说上线前再修</p>
+<p>TODO：邮箱服务器没搞定，zah 说上线前再修</p>
 <h2 id="profilevue">profile.vue</h2>
 <table>
 <thead>
@@ -476,7 +480,7 @@
 <tbody>
 <tr>
 <td>cardOneActive</td>
-<td>用于实现鼠标移到头像上显示修改资料的效果（早期Semantic UI Vue使用不熟练的结果）</td>
+<td>用于实现鼠标移到头像上显示修改资料的效果（早期 Semantic UI Vue 使用不熟练的结果）</td>
 </tr>
 </tbody>
 </table>
@@ -535,75 +539,75 @@
 <tbody>
 <tr>
 <td>profile_form.username</td>
-<td>表格1中的用户名，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的用户名，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.email</td>
-<td>表格1中的邮箱，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的邮箱，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.name</td>
-<td>表格1中的姓名，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的姓名，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.sex</td>
-<td>表格1中的性别，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的性别，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.school</td>
-<td>表格1中的学校，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的学校，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.department</td>
-<td>表格1中的院系，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的院系，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.biography</td>
-<td>表格1中的自我介绍，使用nuxt.js提供的方式获取值</td>
+<td>表格 1 中的自我介绍，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>profile_form.isLoading</td>
-<td>表格1对应的是否加载中的状态变量</td>
+<td>表格 1 对应的是否加载中的状态变量</td>
 </tr>
 <tr>
 <td>profile_form.isOK</td>
-<td>表格1修改成功后，设为True</td>
+<td>表格 1 修改成功后，设为 True</td>
 </tr>
 <tr>
 <td>profile_form.err_code</td>
-<td>表格1提交失败后，err_code设为响应的status_code</td>
+<td>表格 1 提交失败后，err_code 设为响应的 status_code</td>
 </tr>
 <tr>
 <td>password_form.username</td>
-<td>表格2中的用户名，使用nuxt.js提供的方式获取值</td>
+<td>表格 2 中的用户名，使用 nuxt.js 提供的方式获取值</td>
 </tr>
 <tr>
 <td>password_form.old_password</td>
-<td>表格2中的密码，表示原始密码</td>
+<td>表格 2 中的密码，表示原始密码</td>
 </tr>
 <tr>
 <td>password_form.password</td>
-<td>表格2中的新密码</td>
+<td>表格 2 中的新密码</td>
 </tr>
 <tr>
 <td>password_form.confirm_password</td>
-<td>表格2中的确认密码</td>
+<td>表格 2 中的确认密码</td>
 </tr>
 <tr>
 <td>password_form.isLoading</td>
-<td>表格2对应的是否加载中的状态变量</td>
+<td>表格 2 对应的是否加载中的状态变量</td>
 </tr>
 <tr>
 <td>password_form.isOK</td>
-<td>表格2提交成功后，设为True</td>
+<td>表格 2 提交成功后，设为 True</td>
 </tr>
 <tr>
 <td>password_form.err_code</td>
-<td>表格2提交失败后，err_code设为响应的status_code</td>
+<td>表格 2 提交失败后，err_code 设为响应的 status_code</td>
 </tr>
 <tr>
 <td>sex_options</td>
-<td>Vue用于实现下拉菜单，包含下拉菜单中每项的icon，文字描述和值</td>
+<td>Vue 用于实现下拉菜单，包含下拉菜单中每项的 icon，文字描述和值</td>
 </tr>
 </tbody>
 </table>
@@ -621,17 +625,17 @@
 <td>edit_profile</td>
 <td>null</td>
 <td>null</td>
-<td>点击保存资料按钮后会调用此函数，首先进行Vuelidate验证所填表项格式是否合法，然后将表单发送给服务器等待服务器确认修改成功与否，如果保存成功，显示1s的注册成功消息栏</td>
+<td>点击保存资料按钮后会调用此函数，首先进行 Vuelidate 验证所填表项格式是否合法，然后将表单发送给服务器等待服务器确认修改成功与否，如果保存成功，显示 1s 的注册成功消息栏</td>
 </tr>
 <tr>
 <td>change_password</td>
 <td>null</td>
 <td>null</td>
-<td>点击确认修改按钮后会调用此函数，首先进行Vuelidate验证所填表项格式是否合法，然后将表单发送给服务器等待服务器确认修改成功与否，如果修改成功，显示1s的注册成功消息栏</td>
+<td>点击确认修改按钮后会调用此函数，首先进行 Vuelidate 验证所填表项格式是否合法，然后将表单发送给服务器等待服务器确认修改成功与否，如果修改成功，显示 1s 的注册成功消息栏</td>
 </tr>
 </tbody>
 </table>
-<h2 id="user_idvue">user/_id.vue</h2>
+<h2 id="user95idvue">user/_id.vue</h2>
 <table>
 <thead>
 <tr>
@@ -646,7 +650,7 @@
 </tr>
 <tr>
 <td>用途</td>
-<td>查看username用户的相关资料</td>
+<td>查看 username 用户的相关资料</td>
 </tr>
 <tr>
 <td>权限</td>
@@ -668,7 +672,7 @@
 <tbody>
 <tr>
 <td>user</td>
-<td>nuxt.js 中使用asyncData向服务器获取值，表示用户名为username的用户的信息，包括加入时间，注册邮箱，性别等等</td>
+<td>nuxt.js 中使用 asyncData 向服务器获取值，表示用户名为 username 的用户的信息，包括加入时间，注册邮箱，性别等等</td>
 </tr>
 </tbody>
 </table>
