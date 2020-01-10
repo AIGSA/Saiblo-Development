@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>网站前端-部件 - Saiblo 平台开发维护手册</title>
+  <title>部件 - Saiblo 平台开发维护手册</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u7f51\u7ad9\u524d\u7aef-\u90e8\u4ef6";
-    var mkdocs_page_input_path = "frontend/website-frontend-component.md";
+    var mkdocs_page_name = "\u90e8\u4ef6";
+    var mkdocs_page_input_path = "frontend\\website-frontend-component.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -90,6 +90,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../../dev/frontend/">前端</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../../dev/backend/">后端</a>
                 </li>
                 <li class="">
@@ -113,7 +117,7 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">前端开发手册</span>
+    <span class="caption-text">前端手册</span>
     <ul class="subnav">
                 <li class="">
                     
@@ -134,6 +138,22 @@
                 <li class="">
                     
     <a class="" href="../website-frontend-group/">小组系统</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">部件</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#-">网站前端-部件</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#ailistvue">aiList.vue</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -159,8 +179,12 @@
     <li><a href="../..">Docs</a> &raquo;</li>
     
       
+        
+          <li>前端手册 &raquo;</li>
+        
+      
     
-    <li>网站前端-部件</li>
+    <li>部件</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -175,7 +199,6 @@
 <ul>
 <li><a href="#-">网站前端-部件</a><ul>
 <li><a href="#ailistvue">aiList.vue</a></li>
-<li><a href="#codeselectorvue">codeSelector.vue</a></li>
 </ul>
 </li>
 </ul>
@@ -270,24 +293,6 @@
 </thead>
 <tbody>
 <tr>
-<td>init_websocket</td>
-<td>null</td>
-<td>null</td>
-<td>yyt</td>
-</tr>
-<tr>
-<td>websocket_on_message</td>
-<td>event</td>
-<td>null</td>
-<td>yyt</td>
-</tr>
-<tr>
-<td>send_current_state</td>
-<td>null</td>
-<td>null</td>
-<td>yyt</td>
-</tr>
-<tr>
 <td>show_compile_message</td>
 <td>编译信息与编译状态</td>
 <td>null</td>
@@ -310,36 +315,6 @@
 <td>分支，版本</td>
 <td>判定结果</td>
 <td>在分支不使用远程算力且未指定代码文件时需要文件</td>
-</tr>
-<tr>
-<td>isRegularWS</td>
-<td></td>
-<td></td>
-<td>yyt</td>
-</tr>
-<tr>
-<td>requireWSAddr</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>requireFOW</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>entityRequire</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>codeRequire</td>
-<td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>submit_new_entity_and_version</td>
@@ -379,135 +354,17 @@
 </tr>
 </tbody>
 </table>
-<h2 id="codeselectorvue">codeSelector.vue</h2>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用途</td>
-<td>管理提交的代码</td>
-</tr>
-<tr>
-<td>预览</td>
-<td><img alt="" src="../imgs/code-selector.PNG" /></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>传入参数</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>username</td>
-<td>代码管理的是所有与gameId有关的AI</td>
-</tr>
-<tr>
-<td>gameId</td>
-<td>是否允许远端算力</td>
-</tr>
-<tr>
-<td>originEntity</td>
-<td></td>
-</tr>
-<tr>
-<td>originEntities</td>
-<td></td>
-</tr>
-<tr>
-<td>header</td>
-<td></td>
-</tr>
-<tr>
-<td>callback</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>initted</td>
-<td></td>
-</tr>
-<tr>
-<td>open</td>
-<td></td>
-</tr>
-<tr>
-<td>entities</td>
-<td></td>
-</tr>
-<tr>
-<td>entity</td>
-<td></td>
-</tr>
-<tr>
-<td>entity_options</td>
-<td></td>
-</tr>
-<tr>
-<td>code</td>
-<td></td>
-</tr>
-<tr>
-<td>code_options</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>参数</th>
-<th>返回值</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>getEntity</td>
-<td></td>
-<td></td>
-<td>yyt</td>
-</tr>
-<tr>
-<td>getCode</td>
-<td></td>
-<td></td>
-<td>yyt</td>
-</tr>
-<tr>
-<td>selectCode</td>
-<td></td>
-<td></td>
-<td>yyt</td>
-</tr>
-</tbody>
-</table>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../website-frontend-group/" class="btn btn-neutral" title="小组系统"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -530,6 +387,8 @@
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
+      
+        <span><a href="../website-frontend-group/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>
