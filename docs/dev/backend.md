@@ -169,6 +169,11 @@
 - promoter：发起人，是一个指向`User`的多对一外键
 - format：赛制，从Contest类的常量成员`FORMAT`中取值，目前为['cycle', 'ladder', 'free', 'auto']
 
+#### 说明
+
+1. 后端支持比赛随时修改时间
+2. 为了自洽性，将游戏的天梯设置为隐性的比赛天梯，赛制为`auto`，因此后文`ActiveCode`在设置时会生成对应的`Paritipation`
+
 ### Participation
 
 用户参加比赛的记录信息的模型，在contest.py中。
@@ -276,4 +281,124 @@
 ### user.py
 
 - `IsAccountOwner`：判断用户是否是目标用户
+
+## 视图
+
+视图即后端所提供的API，这部分文件全部在backend/saiblo/views中，写法由django-rest框架决定，遵循rest规范，此处将它们罗列一遍毫无意义。
+
+需要注意的是用到的基类可能是混合的，对于一个完整的rest API，视图类继承自`rest_framework.viewsets.ModelViewSet`，但是对于一些孤立的API，可能继承自`APIView`，对于那些不支持全部API，只需要部分功能的类，我采用了多继承的方法，即继承`viewsets.GenericViewSet`与多个`viewsets.mixins.SomeModeMixin`，其中的`Some`为某个具体操作，这样一来可以达到自行组合API的效果。
+
+## 序列化
+
+为了将模型数据序列化成为json数据，用到了serializers，所有的serializer均保存在backend/saiblo/serializers文件夹中，且继承自`rest_framework.serializers.ModelSerializer`，用到了嵌套序列化等复杂结构，使用了视图参数等不优雅的写法，总的来说仍然是遵循着django-rest的支持完成，此处也没有必要罗列一遍。
+
+需要强调的是要注意时间的序列化，前端在开发过程中出现了RFC_2822与RFC_3339标准的混用，后端目前的设定是输入格式为两种标准均支持，输出格式为RFC_2822，这些格式字符串均定义在backend/saiblo/utils/string.py中，维护时建议遵循原有风格。
+
+## 信号
+
+由于信号功能在开发到一半时才学会，所以设计上可能不能保证绝对合理，某些可以采用信号完成的内容在别处完成了，并且信号的设计可能也不优雅，如果有需要可以加强对信号的集成。
+
+信号全部定义在backend/saiblo/signals文件夹中，确切地说与其叫“信号”不如叫“槽”更合适，官方文档推荐把这些槽函数放置于signals文件夹中，我按照该建议完成，但是可以理解成这是一个slots文件夹。
+
+在该文件夹中，signal.py定义了人为新增的信号，包含以下信号：
+
+1. match_prepared：天梯生成的自动对局准备完毕时触发
+2. fighter_changed：天梯AI变更时触发
+3. activate_code_changed：游戏出战AI变更时触发，疑似冗余
+4. ladder_match_judged：天梯对局被评测完成时触发
+
+下面是所有的槽函数。
+
+### auto_deal
+
+- 文件：application.py
+- 信号：post_save
+- 来源：Application
+- 效果：如果是created则处理自动处理申请(不允许任何人加入或自动通过申请)的逻辑，如果不是则处理通过申请的逻辑。
+
+### remove_user
+
+- 文件：application.py
+- 信号：post_delete
+- 来源：Application
+- 效果：在删除申请时移除对应的用户
+
+### add_compile_task
+
+- 文件：code.py
+- 信号：post_save
+- 来源：Code
+- 效果：处理向评测机发起代码编译任务的逻辑
+
+### update_game_ladder
+
+- 文件：code.py
+- 信号：post_save
+- 来源：ActiveCode
+- 效果：在用户添加出战AI时新增比赛AI时生成对应的`Participation`，处理用户出战AI修改
+
+### delete_game_ladder
+
+- 文件：code.py
+- 信号：post_delete
+- 来源：ActiveCode
+- 效果：在游戏退出游戏天梯时删除相应的`Participation`
+
+### deal_code_change
+
+- 文件：contest.py
+- 信号：fighter_changed
+- 来源：Participation
+- 效果：在用户更换天梯AI时给出天梯惩罚分，目前是减100
+
+### add_game_contest
+
+- 文件：game.py
+- 信号：post_save
+- 来源：Game
+- 效果：在新建Game时添加对应的隐性比赛
+
+### update_ladder
+
+- 文件：group.py
+- 信号：m2m_changed
+- 来源：Group.members.through
+- 效果：在小组离开用户时，将他在该小组的所有比赛的信息删除
+
+### deal_application
+
+- 文件：group.py
+- 信号：post_save
+- 来源：Group
+- 效果：在创建小组时为创建者生成隐性申请，在设置为不允许任何人加入时删除所有申请，在设置成自动通过申请时通过所有现有申请
+
+### send_ladder_match
+
+- 文件：match.py
+- 信号：match_prepared
+- 来源：Match
+- 效果：在新的对局生成时将它传给评测机
+
+### update_ladder
+
+- 文件：match.py
+- 信号：ladder_match_judged
+- 来源：Match
+- 效果：在评测完对局后处理对局选手天体分数的变更
+
+## 定时任务
+
+为了实现后端定时发起天梯对局的效果，用到了django-crontab设置定时任务，任务的执行函数在backend/saiblo/tasks文件夹中，目前该文件夹只有ladder.py，包含以下内容。
+
+### NAME_TO_MATCH_CREATOR
+
+一个字典常量，为不同赛制绑定相应对局生成函数，这里理应允许赛事方自行制定赛制并接入。
+
+### auto_match
+
+被定时调用的函数，每隔一个固定时间会在这里生成天体对局，时间间隔设置在backend/app/settings.py的`CRONJOBS`列表中，具体用法参加django-crontab文档。
+
+### randon_create_match
+
+暂时使用的随机生成对局的函数，会自动在比赛达到所需要人数下限后生成对局，随机在参赛AI中进行抽取。
 
