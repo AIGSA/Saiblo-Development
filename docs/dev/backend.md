@@ -1,17 +1,17 @@
 # 后端
 
-后端主要用django-rest架构完成，作为了一个API服务器为前端提供数据，为此使用到以下**核心库**：
+后端主要用Django REST架构完成，作为了一个API服务器为前端提供数据，为此使用到以下**核心库**：
 
-- django：基本框架库
-- djangoresetframework：提供rest接口
-- djangorestframework-simplejwt：提供jwt认证服务
-- django-crontab：定时执行任务，用于跑天梯赛等
+- Django：基本框架库
+- Django REST Framework：提供REST接口
+- Simple JWT：提供JWT认证服务
+- Django Crontab：定时执行任务，用于跑天梯赛等
 
 ## 模型
 
-作为django下开发数据库的数据库的基础，本着精简的原则设计了各种model，在backend/saiblo/models文件夹中定义了所有模型，下面在描述模型所在文件时均是相对该文件夹的相对路径。
+作为Django下开发数据库的数据库的基础，本着精简的原则设计了各种model，在backend/saiblo/models文件夹中定义了所有模型，下面在描述模型所在文件时均是相对该文件夹的相对路径。
 
-注：如无特殊说明，模型将继承自`django.db.models.Model`，且默认包含了自增主键字段`id`。
+注：如无特殊说明，模型将继承自`Django.db.models.Model`，且默认包含了自增主键字段`id`。
 
 ### User
 
@@ -26,7 +26,7 @@
 - is_superuser：bool，是否是超级用户
 - first_name & last_name：**未使用**
 - email：邮箱号，唯一
-- is_staff：bool，是否有django管理网站访问权限
+- is_staff：bool，是否有Django管理网站访问权限
 - is_active：bool，用户是否已激活
 - date_joined：注册时间，自动生成
 
@@ -250,7 +250,7 @@
 
 ## 权限
 
-权限管理使用了`rest_framework.permissions`部分的内容，在backend/saiblo/permissions文件夹中包含了所有权限设定，均继承自`rest_framework.permissions.BasePermission`。关于权限的使用属于django-rest基础知识，这里仅仅按文件列举出目前包含的权限以及语义。
+权限管理使用了`rest_framework.permissions`部分的内容，在backend/saiblo/permissions文件夹中包含了所有权限设定，均继承自`rest_framework.permissions.BasePermission`。关于权限的使用属于Django REST基础知识，这里仅仅按文件列举出目前包含的权限以及语义。
 
 ### application.py
 
@@ -284,13 +284,13 @@
 
 ## 视图
 
-视图即后端所提供的API，这部分文件全部在backend/saiblo/views中，写法由django-rest框架决定，遵循rest规范，此处将它们罗列一遍毫无意义。
+视图即后端所提供的API，这部分文件全部在backend/saiblo/views中，写法由Django REST框架决定，遵循REST规范，此处将它们罗列一遍毫无意义。
 
-需要注意的是用到的基类可能是混合的，对于一个完整的rest API，视图类继承自`rest_framework.viewsets.ModelViewSet`，但是对于一些孤立的API，可能继承自`APIView`，对于那些不支持全部API，只需要部分功能的类，我采用了多继承的方法，即继承`viewsets.GenericViewSet`与多个`viewsets.mixins.SomeModeMixin`，其中的`Some`为某个具体操作，这样一来可以达到自行组合API的效果。
+需要注意的是用到的基类可能是混合的，对于一个完整的REST API，视图类继承自`rest_framework.viewsets.ModelViewSet`，但是对于一些孤立的API，可能继承自`APIView`，对于那些不支持全部API，只需要部分功能的类，我采用了多继承的方法，即继承`viewsets.GenericViewSet`与多个`viewsets.mixins.SomeModeMixin`，其中的`Some`为某个具体操作，这样一来可以达到自行组合API的效果。
 
 ## 序列化
 
-为了将模型数据序列化成为json数据，用到了serializers，所有的serializer均保存在backend/saiblo/serializers文件夹中，且继承自`rest_framework.serializers.ModelSerializer`，用到了嵌套序列化等复杂结构，使用了视图参数等不优雅的写法，总的来说仍然是遵循着django-rest的支持完成，此处也没有必要罗列一遍。
+为了将模型数据序列化成为json数据，用到了serializers，所有的serializer均保存在backend/saiblo/serializers文件夹中，且继承自`rest_framework.serializers.ModelSerializer`，用到了嵌套序列化等复杂结构，使用了视图参数等不优雅的写法，总的来说仍然是遵循着Django REST的支持完成，此处也没有必要罗列一遍。
 
 需要强调的是要注意时间的序列化，前端在开发过程中出现了RFC_2822与RFC_3339标准的混用，后端目前的设定是输入格式为两种标准均支持，输出格式为RFC_2822，这些格式字符串均定义在backend/saiblo/utils/string.py中，维护时建议遵循原有风格。
 
@@ -388,7 +388,7 @@
 
 ## 定时任务
 
-为了实现后端定时发起天梯对局的效果，用到了django-crontab设置定时任务，任务的执行函数在backend/saiblo/tasks文件夹中，目前该文件夹只有ladder.py，包含以下内容。
+为了实现后端定时发起天梯对局的效果，用到了Django-crontab设置定时任务，任务的执行函数在backend/saiblo/tasks文件夹中，目前该文件夹只有ladder.py，包含以下内容。
 
 ### NAME_TO_MATCH_CREATOR
 
@@ -396,7 +396,7 @@
 
 ### auto_match
 
-被定时调用的函数，每隔一个固定时间会在这里生成天体对局，时间间隔设置在backend/app/settings.py的`CRONJOBS`列表中，具体用法参加django-crontab文档。
+被定时调用的函数，每隔一个固定时间会在这里生成天体对局，时间间隔设置在backend/app/settings.py的`CRONJOBS`列表中，具体用法参加Django-crontab文档。
 
 ### randon_create_match
 
