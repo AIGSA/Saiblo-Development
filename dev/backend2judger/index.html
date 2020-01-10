@@ -18,7 +18,7 @@
   <script>
     // Current page data
     var mkdocs_page_name = "\u540e\u7aef\u4e0e\u8bc4\u6d4b\u7aef";
-    var mkdocs_page_input_path = "dev\\backend2judger.md";
+    var mkdocs_page_input_path = "dev/backend2judger.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -71,11 +71,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/judger.md">评测机部署</a>
+    <a class="" href="../../ops/judger/">评测机部署</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/wiki.md">Wiki 管理</a>
+    <a class="" href="../../ops/wiki/">Wiki 管理</a>
                 </li>
     </ul>
 	    </li>
@@ -113,6 +113,23 @@
     <a class="current" href="./">后端与评测端</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#_1">网站后端与测评端</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#_2">概要</a></li>
+        
+            <li><a class="toctree-l4" href="#_3">定义</a></li>
+        
+            <li><a class="toctree-l4" href="#_4">基本流程</a></li>
+        
+            <li><a class="toctree-l4" href="#websocket">Websocket 通信</a></li>
+        
+            <li><a class="toctree-l4" href="#http-api">HTTP API</a></li>
+        
+        </ul>
+    
+
     </ul>
                 </li>
     </ul>
@@ -181,7 +198,166 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="_1">网站后端与测评端</h1>
+<h2 id="_2">概要</h2>
+<p>该文档定义了网站后端与测评端交互的接口。原则上，对于测评任务的分配，双方采用 Websocket 协议通信。对于测评端向服务器端的数据获取以及发送，采用 HTTP 协议。</p>
+<h2 id="_3">定义</h2>
+<p>网站后端将 Websocket 服务器启动在 <code>ws://HOSTNAME:PORT/ws/</code> 上
+网站后端将 HTTP API 启动在 <code>http://HOSTNAME:PORT/judger/</code> 上</p>
+<h2 id="_4">基本流程</h2>
+<ol>
+<li>网站后端启动 Websocket Server / HTTP Server</li>
+<li>测评端通过 Websocket 连接至网站后端</li>
+<li>测评端发送初始化指令，此时网站后端认为测评端上线</li>
+<li>网站后端利用 Websocket 和 HTTP API 与测评端进行通信</li>
+<li>测评端断开 Websocket，此时网站后端认为测评端下线</li>
+</ol>
+<h2 id="websocket">Websocket 通信</h2>
+<h3 id="_5">初始化</h3>
+<h4 id="_6">测评端发送</h4>
+<pre><code class="json">{
+    type: 0,
+    data: {
+        description,
+        address
+    }
+}
+</code></pre>
+
+<p><strong>data.description : string : required</strong></p>
+<p>描述测评端的信息，用于前端显示</p>
+<p><strong>data.address : string : optional</strong></p>
+<p>测评端的地址，形如 <code>1.1.1.1:5000</code>，必须外网可访问。</p>
+<p>如果提供地址，该测评端将被认为提供了一个完整的房间系统服务，会在网站前端的房间服务器列表中进行显示。</p>
+<p>如果未提供地址，则网站认为测评端不提供房间系统服务。</p>
+<h3 id="_7">对局测评任务</h3>
+<h4 id="_8">网站后端发送</h4>
+<pre><code class="json">{
+    &quot;type&quot;: 1
+    &quot;data&quot;: {
+        match_id,
+        game_id,
+        player_number,
+        &quot;players&quot;: [
+            {
+                type,
+                player_id
+            }
+        ],
+    }
+}
+</code></pre>
+
+<h4 id="_9">评测端回复</h4>
+<pre><code class="json">{
+    &quot;type&quot;: 1
+    &quot;data&quot;: {
+        match_id,
+        success,
+        msg,
+    }
+}
+</code></pre>
+
+<p>表示是否成功接受到这个评测任务</p>
+<h3 id="ai">AI 编译任务</h3>
+<h4 id="_10">网站后端发送</h4>
+<pre><code class="json">{
+    &quot;type&quot;: 2
+    &quot;data&quot;: {
+        code_id
+    }
+}
+</code></pre>
+
+<p><strong>code_token : string : required </strong></p>
+<p>表示待编译的代码的 token</p>
+<h4 id="_11">评测端回复</h4>
+<pre><code class="json">{
+    &quot;type&quot;: 2
+    &quot;data&quot;: {
+        code_id,
+        success,
+        msg,
+    }
+}
+</code></pre>
+
+<p>表示是否成功接受到这个编译任务</p>
+<h2 id="http-api">HTTP API</h2>
+<h3 id="url-codescode_id">URL: codes/:code_id/</h3>
+<h4 id="get">GET</h4>
+<p>只读接口，提供具体代码数据。</p>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<p><strong>返回</strong></p>
+<pre><code class="python">{
+    'entity':                           # info of entity
+    {
+        'user': 'moon',                 # user's name
+        'name': 'test1',                # entity's name
+        'game': 'love',                 # game's name
+        'created_time': 'Tue, 22 Oct 2019 10:04:38 +0800',
+        'id': 1,                        # entity's id
+        'versions': 3,                  # entity's versions
+        'update_time': 'Fri, 25 Oct 2019 13:27:17 +0800',
+        'language': 'C++'
+    },
+    'remark': 'test',                   # code remark
+    'version': 5,                       # code version id
+    'url': '/judger/codes/1/download/', # code download url
+    'compile_status': '未编译',
+    'compile_message': ''
+}
+</code></pre>
+
+<h5 id="_12">参数</h5>
+<ul>
+<li><code>language</code>选项 - 前端显示信息</li>
+<li>'cmake'：c++ with CMake</li>
+<li>'make': c++ with Makefile</li>
+<li>'cpp': g++</li>
+<li>'c': gcc</li>
+<li>'python': python single file</li>
+<li>'python_zip': python zip file</li>
+</ul>
+<h4 id="put">PUT</h4>
+<p>评测端代码编译完成后，提交编译信息</p>
+<p><strong>数据</strong></p>
+<ul>
+<li>compile_status: 字符串，表示新的编译状态，取值范围是 <code>['编译成功', '编译失败']</code></li>
+<li>compile_message: 字符串，表示编译信息</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：修改成功</li>
+</ul>
+<h3 id="url-codescode_iddownload">URL: codes/:code_id/download/</h3>
+<h4 id="get_1">GET</h4>
+<p>下载目标代码。</p>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：获取成功</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>下载内容，文件名为<code>&lt;code_id&gt;.zip</code>。</p>
+<h3 id="url-matchesmatch_id">URL: matches/:match_id/</h3>
+<h4 id="put_1">PUT</h4>
+<p>评测端对局评测完成后，返回评测信息</p>
+<p><strong>数据（Form 格式）</strong></p>
+<p>请求的 Header 应为：<code>"Content-Type": "multipart/form-data; boundary=BoUnDaRyStRiNg"</code></p>
+<ul>
+<li>file: 文件，表示评测文件</li>
+<li>message: 字符串，表示评测结果</li>
+<li>state: 字符串， 表示评测状态，取值范围是 <code>['准备中', '评测中', '评测成功', '评测失败']</code></li>
+<li>scores: 字典，表示各个位置上玩家的得分，如 <code>{"0": 100, "1", 200}</code></li>
+</ul>
+<p><strong>返回</strong></p>
+<ul>
+<li>200：修改成功</li>
+</ul>
               
             </div>
           </div>

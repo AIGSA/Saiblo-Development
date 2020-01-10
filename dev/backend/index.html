@@ -18,7 +18,7 @@
   <script>
     // Current page data
     var mkdocs_page_name = "\u540e\u7aef";
-    var mkdocs_page_input_path = "dev\\backend.md";
+    var mkdocs_page_input_path = "dev/backend.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -71,11 +71,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/judger.md">评测机部署</a>
+    <a class="" href="../../ops/judger/">评测机部署</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/wiki.md">Wiki 管理</a>
+    <a class="" href="../../ops/wiki/">Wiki 管理</a>
                 </li>
     </ul>
 	    </li>
@@ -103,7 +103,15 @@
         
             <li><a class="toctree-l4" href="#_2">模型</a></li>
         
-            <li><a class="toctree-l4" href="#_23">权限</a></li>
+            <li><a class="toctree-l4" href="#_24">权限</a></li>
+        
+            <li><a class="toctree-l4" href="#_25">视图</a></li>
+        
+            <li><a class="toctree-l4" href="#_26">序列化</a></li>
+        
+            <li><a class="toctree-l4" href="#_27">信号</a></li>
+        
+            <li><a class="toctree-l4" href="#_28">定时任务</a></li>
         
         </ul>
     
@@ -342,9 +350,14 @@
 <li>promoter：发起人，是一个指向<code>User</code>的多对一外键</li>
 <li>format：赛制，从Contest类的常量成员<code>FORMAT</code>中取值，目前为['cycle', 'ladder', 'free', 'auto']</li>
 </ul>
+<h4 id="_15">说明</h4>
+<ol>
+<li>后端支持比赛随时修改时间</li>
+<li>为了自洽性，将游戏的天梯设置为隐性的比赛天梯，赛制为<code>auto</code>，因此后文<code>ActiveCode</code>在设置时会生成对应的<code>Paritipation</code></li>
+</ol>
 <h3 id="participation">Participation</h3>
 <p>用户参加比赛的记录信息的模型，在contest.py中。</p>
-<h4 id="_15">字段</h4>
+<h4 id="_16">字段</h4>
 <ul>
 <li>contest：比赛，是一个指向<code>Contest</code>的多对一外键</li>
 <li>user：用户，是一个指向<code>User</code>的多对一外键</li>
@@ -352,19 +365,19 @@
 <li>socre：天梯分</li>
 <li>joined_time：加入时间，自动生成</li>
 </ul>
-<h4 id="_16">约束</h4>
+<h4 id="_17">约束</h4>
 <ul>
 <li>按score升序排序</li>
 <li>对于一组('contest', 'user')其Participation唯一</li>
 </ul>
-<h4 id="_17">说明</h4>
+<h4 id="_18">说明</h4>
 <ol>
 <li>当用户加入比赛时会自动生成相应的Participation，退出(取消出战AI)时会删除该记录，此时天梯分将被清除</li>
 <li>用户参加比赛(指定比赛的出战AI)时只需要Pariticipation记录即可，而对游戏设置出战AI则需要用到下面的ActivateCode</li>
 </ol>
 <h3 id="activatecode">ActivateCode</h3>
 <p>表示游戏的出战AI的模型，在code.py中。</p>
-<h4 id="_18">字段</h4>
+<h4 id="_19">字段</h4>
 <ul>
 <li>user：用户，是一个指向<code>User</code>的多对一外键</li>
 <li>game：游戏，是一个指向<code>Game</code>的多对一外键</li>
@@ -372,13 +385,13 @@
 <li>time：更新时间，自动更新</li>
 <li>part：天梯记录信息，是一个指向<code>Participation</code>的一对一外键，可以为空</li>
 </ul>
-<h4 id="_19">约束</h4>
+<h4 id="_20">约束</h4>
 <ul>
 <li>对于一组('user', 'game')其ActivateCode是唯一的</li>
 </ul>
 <h3 id="match">Match</h3>
 <p>记录对局的模型，在match.py中。</p>
-<h4 id="_20">字段</h4>
+<h4 id="_21">字段</h4>
 <ul>
 <li>players：对局用户，是一个指向<code>User</code>的多对多外键</li>
 <li>contest：比赛，是一个指向<code>Contest</code>的多对一外键，可以为空，表示这是游戏对局而非比赛对局</li>
@@ -388,13 +401,13 @@
 <li>file：对局文件，评测机给出</li>
 <li>message：评测字符串，评测机给出，包含了得分情况，需要后端根据通信格式解析</li>
 </ul>
-<h4 id="_21">约束</h4>
+<h4 id="_22">约束</h4>
 <ul>
 <li>按create_time降序排序</li>
 </ul>
 <h3 id="playerinfo">PlayerInfo</h3>
 <p>记录对局中各个选手得分情况的模型，在match.py中。</p>
-<h4 id="_22">字段</h4>
+<h4 id="_23">字段</h4>
 <ul>
 <li>code：代码，是一个指向<code>Code</code>的多对一外键，可以为空，表示这是玩家控制而非AI</li>
 <li>user：用户，是一个指向<code>User</code>的多对一外键</li>
@@ -405,7 +418,7 @@
 <h3 id="contestinfo">ContestInfo</h3>
 <p>用于记录一个对局关于比赛信息的模型，在match.py中。</p>
 <p>疑似冗余，计划删除。</p>
-<h2 id="_23">权限</h2>
+<h2 id="_24">权限</h2>
 <p>权限管理使用了<code>rest_framework.permissions</code>部分的内容，在backend/saiblo/permissions文件夹中包含了所有权限设定，均继承自<code>rest_framework.permissions.BasePermission</code>。关于权限的使用属于django-rest基础知识，这里仅仅按文件列举出目前包含的权限以及语义。</p>
 <h3 id="applicationpy">application.py</h3>
 <ul>
@@ -437,6 +450,108 @@
 <ul>
 <li><code>IsAccountOwner</code>：判断用户是否是目标用户</li>
 </ul>
+<h2 id="_25">视图</h2>
+<p>视图即后端所提供的API，这部分文件全部在backend/saiblo/views中，写法由django-rest框架决定，遵循rest规范，此处将它们罗列一遍毫无意义。</p>
+<p>需要注意的是用到的基类可能是混合的，对于一个完整的rest API，视图类继承自<code>rest_framework.viewsets.ModelViewSet</code>，但是对于一些孤立的API，可能继承自<code>APIView</code>，对于那些不支持全部API，只需要部分功能的类，我采用了多继承的方法，即继承<code>viewsets.GenericViewSet</code>与多个<code>viewsets.mixins.SomeModeMixin</code>，其中的<code>Some</code>为某个具体操作，这样一来可以达到自行组合API的效果。</p>
+<h2 id="_26">序列化</h2>
+<p>为了将模型数据序列化成为json数据，用到了serializers，所有的serializer均保存在backend/saiblo/serializers文件夹中，且继承自<code>rest_framework.serializers.ModelSerializer</code>，用到了嵌套序列化等复杂结构，使用了视图参数等不优雅的写法，总的来说仍然是遵循着django-rest的支持完成，此处也没有必要罗列一遍。</p>
+<p>需要强调的是要注意时间的序列化，前端在开发过程中出现了RFC_2822与RFC_3339标准的混用，后端目前的设定是输入格式为两种标准均支持，输出格式为RFC_2822，这些格式字符串均定义在backend/saiblo/utils/string.py中，维护时建议遵循原有风格。</p>
+<h2 id="_27">信号</h2>
+<p>由于信号功能在开发到一半时才学会，所以设计上可能不能保证绝对合理，某些可以采用信号完成的内容在别处完成了，并且信号的设计可能也不优雅，如果有需要可以加强对信号的集成。</p>
+<p>信号全部定义在backend/saiblo/signals文件夹中，确切地说与其叫“信号”不如叫“槽”更合适，官方文档推荐把这些槽函数放置于signals文件夹中，我按照该建议完成，但是可以理解成这是一个slots文件夹。</p>
+<p>在该文件夹中，signal.py定义了人为新增的信号，包含以下信号：</p>
+<ol>
+<li>match_prepared：天梯生成的自动对局准备完毕时触发</li>
+<li>fighter_changed：天梯AI变更时触发</li>
+<li>activate_code_changed：游戏出战AI变更时触发，疑似冗余</li>
+<li>ladder_match_judged：天梯对局被评测完成时触发</li>
+</ol>
+<p>下面是所有的槽函数。</p>
+<h3 id="auto_deal">auto_deal</h3>
+<ul>
+<li>文件：application.py</li>
+<li>信号：post_save</li>
+<li>来源：Application</li>
+<li>效果：如果是created则处理自动处理申请(不允许任何人加入或自动通过申请)的逻辑，如果不是则处理通过申请的逻辑。</li>
+</ul>
+<h3 id="remove_user">remove_user</h3>
+<ul>
+<li>文件：application.py</li>
+<li>信号：post_delete</li>
+<li>来源：Application</li>
+<li>效果：在删除申请时移除对应的用户</li>
+</ul>
+<h3 id="add_compile_task">add_compile_task</h3>
+<ul>
+<li>文件：code.py</li>
+<li>信号：post_save</li>
+<li>来源：Code</li>
+<li>效果：处理向评测机发起代码编译任务的逻辑</li>
+</ul>
+<h3 id="update_game_ladder">update_game_ladder</h3>
+<ul>
+<li>文件：code.py</li>
+<li>信号：post_save</li>
+<li>来源：ActiveCode</li>
+<li>效果：在用户添加出战AI时新增比赛AI时生成对应的<code>Participation</code>，处理用户出战AI修改</li>
+</ul>
+<h3 id="delete_game_ladder">delete_game_ladder</h3>
+<ul>
+<li>文件：code.py</li>
+<li>信号：post_delete</li>
+<li>来源：ActiveCode</li>
+<li>效果：在游戏退出游戏天梯时删除相应的<code>Participation</code></li>
+</ul>
+<h3 id="deal_code_change">deal_code_change</h3>
+<ul>
+<li>文件：contest.py</li>
+<li>信号：fighter_changed</li>
+<li>来源：Participation</li>
+<li>效果：在用户更换天梯AI时给出天梯惩罚分，目前是减100</li>
+</ul>
+<h3 id="add_game_contest">add_game_contest</h3>
+<ul>
+<li>文件：game.py</li>
+<li>信号：post_save</li>
+<li>来源：Game</li>
+<li>效果：在新建Game时添加对应的隐性比赛</li>
+</ul>
+<h3 id="update_ladder">update_ladder</h3>
+<ul>
+<li>文件：group.py</li>
+<li>信号：m2m_changed</li>
+<li>来源：Group.members.through</li>
+<li>效果：在小组离开用户时，将他在该小组的所有比赛的信息删除</li>
+</ul>
+<h3 id="deal_application">deal_application</h3>
+<ul>
+<li>文件：group.py</li>
+<li>信号：post_save</li>
+<li>来源：Group</li>
+<li>效果：在创建小组时为创建者生成隐性申请，在设置为不允许任何人加入时删除所有申请，在设置成自动通过申请时通过所有现有申请</li>
+</ul>
+<h3 id="send_ladder_match">send_ladder_match</h3>
+<ul>
+<li>文件：match.py</li>
+<li>信号：match_prepared</li>
+<li>来源：Match</li>
+<li>效果：在新的对局生成时将它传给评测机</li>
+</ul>
+<h3 id="update_ladder_1">update_ladder</h3>
+<ul>
+<li>文件：match.py</li>
+<li>信号：ladder_match_judged</li>
+<li>来源：Match</li>
+<li>效果：在评测完对局后处理对局选手天体分数的变更</li>
+</ul>
+<h2 id="_28">定时任务</h2>
+<p>为了实现后端定时发起天梯对局的效果，用到了django-crontab设置定时任务，任务的执行函数在backend/saiblo/tasks文件夹中，目前该文件夹只有ladder.py，包含以下内容。</p>
+<h3 id="name_to_match_creator">NAME_TO_MATCH_CREATOR</h3>
+<p>一个字典常量，为不同赛制绑定相应对局生成函数，这里理应允许赛事方自行制定赛制并接入。</p>
+<h3 id="auto_match">auto_match</h3>
+<p>被定时调用的函数，每隔一个固定时间会在这里生成天体对局，时间间隔设置在backend/app/settings.py的<code>CRONJOBS</code>列表中，具体用法参加django-crontab文档。</p>
+<h3 id="randon_create_match">randon_create_match</h3>
+<p>暂时使用的随机生成对局的函数，会自动在比赛达到所需要人数下限后生成对局，随机在参赛AI中进行抽取。</p>
               
             </div>
           </div>
