@@ -22,4 +22,5 @@ nav:
     - '游戏系统': 'frontend/website-frontend-game.md'
     - '小组系统': 'frontend/website-frontend-group.md'
     - '部件': 'frontend/website-frontend-component.md'
+    - '代码系统': 'frontend/website-frontend-code.md'
 theme: readthedocs
