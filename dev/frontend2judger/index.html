@@ -169,86 +169,89 @@
 <p><strong>[①]</strong> 1.从后端获取所有服务器的地址；2.选择某一个评测端服务器；3.使用<code>Websocket</code>与评测端建立连接。</p>
 <p><strong>[②]</strong> 1.确认已经连接到某一个评测端服务器；2.用户点击创建房间，一并将房间信息发送给评测端。</p>
 <pre><code class="json">{
-    'type': 'create_room', //指令类型
-    'user': user_object, //创建房间的用户信息，与后端user结构相同
-    'game': game_object, //创建房间的游戏信息，与后端game结构相同
-    'private': Boolean //房间是否为私密房间
+  &quot;type&quot;: &quot;create_room&quot;, //指令类型
+  &quot;user&quot;: user_object, //创建房间的用户信息，与后端user结构相同
+  &quot;game&quot;: game_object, //创建房间的游戏信息，与后端game结构相同
+  &quot;private&quot;: Boolean //房间是否为私密房间
 }
 </code></pre>
 
 <p><strong>[③]</strong> 1.由于其他用户的操作使得房间列表发生变化时，评测端将会推送列表信息的更新给前端。</p>
 <pre><code class="json">{
-    'type': 'push_room_list', //指令类型
-    'room': room_list //房间列表
+  &quot;type&quot;: &quot;push_room_list&quot;, //指令类型
+  &quot;room&quot;: room_list //房间列表
 }
 </code></pre>
 
 <p><code>room_list</code>中每一个元素结构如下。</p>
 <pre><code class="json">{
-    'id': room_id, //房间id
-    'host': host_username, //房主的用户名
-    'users': user_object_list, //房间内用户列表，每一个元素均为user_object，与后端user结构相同
-    'game': game_id, //游戏id
-    'private': Boolean //是否私密
+  &quot;id&quot;: room_id, //房间id
+  &quot;host&quot;: host_username, //房主的用户名
+  &quot;users&quot;: user_object_list, //房间内用户列表，每一个元素均为user_object，与后端user结构相同
+  &quot;game&quot;: game_id, //游戏id
+  &quot;private&quot;: Boolean //是否私密
 }
 </code></pre>
 
 <p><strong>[④]</strong> 1.确认已经连接到某一个评测端服务器；2.用户点击加入某一个房间，将这一信息发送给评测端。</p>
 <pre><code class="json">{
-    'type': 'add_room', //指令类型
-    'user': user_object //加入房间的用户信息，与后端user结构相同
+  &quot;type&quot;: &quot;add_room&quot;, //指令类型
+  &quot;user&quot;: user_object //加入房间的用户信息，与后端user结构相同
 }
 </code></pre>
 
 <p><strong>[⑤]</strong> 1.用户向评测端发送了创建房间的请求；2.评测端创建好了房间，告知前端已创建房间，令前端自动跳转到房间页面。</p>
 <pre><code class="json">{
-    'type': 'room_created', //指令类型
-    'user': username, //创建房间的用户的用户名
-    'room': room_id //房间id，用以根据id进入到房间页面
+  &quot;type&quot;: &quot;room_created&quot;, //指令类型
+  &quot;user&quot;: username, //创建房间的用户的用户名
+  &quot;room&quot;: room_id //房间id，用以根据id进入到房间页面
 }
 </code></pre>
 
 <p><strong>[⑥]</strong> 1.用户通过<code>Websocket</code>与评测端建立连接。<code>Websocket</code>地址的计算方式为<code>JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME</code>。</p>
 <p><strong>[⑦]</strong> 1.确认已经连接到评测端；2.用户点击房间中的某一个座位作为人类玩家加入游戏或者退出该座位，将这一信息发送给评测端。</p>
 <pre><code class="json">{
-    'type': 'ready_human', //加入人类玩家
-    'user': username, //加入座位的用户的用户名
-    'seat': seat //加入的座位编号
-}
-
-{
-    'type': 'cancel_human', //人类玩家退出座位
-    'user': username, //退出座位的用户的用户名
-    'seat': seat //退出的座位编号
+  &quot;type&quot;: &quot;ready_human&quot;, //加入人类玩家
+  &quot;user&quot;: username, //加入座位的用户的用户名
+  &quot;seat&quot;: seat //加入的座位编号
 }
 </code></pre>
 
-<p><strong>[⑧]</strong> 1.确认已经连接到评测端；2.用户点击房间中的某一个座位添加一个AI加入游戏或者是踢出这个座位上的AI，将这一信息发送给评测端。</p>
 <pre><code class="json">{
-    'type': 'ready_ai', //加入AI
-    'seat': seat, //座位编号
-    'ai': ai_object //AI的信息
+  &quot;type&quot;: &quot;cancel_human&quot;, //人类玩家退出座位
+  &quot;user&quot;: username, //退出座位的用户的用户名
+  &quot;seat&quot;: seat //退出的座位编号
 }
+</code></pre>
 
-{
-    'type': 'cancel_ai', //踢出AI
-    'seat': seat //踢出的座位编号
+<p><strong>[⑧]</strong> 1.确认已经连接到评测端；2.用户点击房间中的某一个座位添加一个 AI 加入游戏或者是踢出这个座位上的 AI，将这一信息发送给评测端。</p>
+<pre><code class="json">{
+  &quot;type&quot;: &quot;ready_ai&quot;, //加入AI
+  &quot;seat&quot;: seat, //座位编号
+  &quot;ai&quot;: ai_object //AI的信息
+}
+</code></pre>
+
+<pre><code class="json">{
+  &quot;type&quot;: &quot;cancel_ai&quot;, //踢出AI
+  &quot;seat&quot;: seat //踢出的座位编号
 }
 </code></pre>
 
 <p><code>ai</code>结构为后端的<code>entity</code>，再附加上<code>code</code>作为<code>ai.code</code>。</p>
 <p><strong>[⑨]</strong> 1.当房间信息有变动时，评测端将会推送新的房间信息给用户。</p>
 <pre><code class="json">{
-    'type': 'status', //指令类型
-    'users': user_object_list, //房间内用户列表
-    'players': player_list, //房间内玩家列表(指在座位上的玩家)
-    'game': game_id, //游戏id
-    'game_status': game_status, // 游戏是否开始
-    'configs': { //房间的配置信息
-        'attr1': { 'name': String, 'value': defaultvalue1, 'hint': String }, //配置名、默认值、配置显示的内容
-        'attr2': { 'name': String, 'value': defaultvalue2, 'hint': String },
-        ...
-    }
+  &quot;type&quot;: &quot;status&quot;, //指令类型
+  &quot;users&quot;: user_object_list, //房间内用户列表
+  &quot;players&quot;: player_list, //房间内玩家列表(指在座位上的玩家)
+  &quot;game&quot;: game_id, //游戏id
+  &quot;game_status&quot;: game_status, // 游戏是否开始
+  &quot;configs&quot;: {
+    //房间的配置信息
+    &quot;attr1&quot;: { &quot;name&quot;: String, &quot;value&quot;: defaultvalue1, &quot;hint&quot;: String }, //配置名、默认值、配置显示的内容
+    &quot;attr2&quot;: { &quot;name&quot;: String, &quot;value&quot;: defaultvalue2, &quot;hint&quot;: String },
+    ...
+  }
 }
 </code></pre>
 
@@ -258,18 +261,19 @@
 <p>实际上就是玩家退出座位的命令。只不过房主可以令任何人退出座位。</p>
 <p><strong>[⑫]</strong> 1.确认已经连接到评测端；2.房主修改房间内的一些信息，例如房间人数，游戏设置等等，将这一信息发送给评测端。</p>
 <pre><code class="json">{
-    'type': 'edit_game_configs', //指令类型
-    'configs': { //配置的内容
-        'attr1': value1,
-        'attr2': value2,
-        ...
-    }
+  &quot;type&quot;: &quot;edit_game_configs&quot;, //指令类型
+  &quot;configs&quot;: {
+    //配置的内容
+    &quot;attr1&quot;: value1,
+    &quot;attr2&quot;: value2,
+    ...
+  }
 }
 </code></pre>
 
 <p><strong>[⑬]</strong> 1.确认已经连接到评测端；2.确认所有玩家均已准备；3.房主点击开始游戏。</p>
 <pre><code class="json">{
-    'type': 'start' //指令类型
+  &quot;type&quot;: &quot;start&quot; //指令类型
 }
 </code></pre>
 

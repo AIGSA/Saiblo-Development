@@ -66,7 +66,7 @@
     <a class="current" href="./">反向代理</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#_1">测评端连接</a></li>
+    <li class="toctree-l3"><a href="#_1">反向代理</a></li>
     
 
     </ul>
@@ -149,8 +149,44 @@
           <div role="main">
             <div class="section">
               
-                <h4 id="_1">测评端连接</h4>
-<p>测评段需要连接到后端监听的地址，如 <code>127.0.0.1:8000</code>，由于 <code>127.0.0.1:8000/judger/</code> 下的 API 不需要鉴权，所以不要将后端地址暴露。</p>
+                <h2 id="_1">反向代理</h2>
+<p>在 <code>frontend/nuxt.config.js</code> 中，配置了若干反向代理规则：</p>
+<pre><code class="js">proxy: {
+  &quot;/api/&quot;: {
+    target: &quot;http://localhost:8000&quot;,
+    autoRewrite: true
+  },
+  &quot;/admin/&quot;: {
+    target: &quot;http://localhost:8000&quot;
+  },
+  &quot;/static/&quot;: {
+    target: &quot;http://localhost:8000&quot;
+  },
+  &quot;/ws&quot;: {
+    target: &quot;http://localhost:8000&quot;,
+    ws: true
+  },
+  &quot;/judger_proxy/&quot;: {
+    target: &quot;http://localhost:8000&quot;,
+    router: function(req) {
+      let port = req.url.split(&quot;/&quot;)[2]
+      return &quot;http://localhost:&quot; + port
+    },
+    pathRewrite: function(path) {
+      return path.replace(/\/judger_proxy\/\d+\//, &quot;/&quot;)
+    },
+    ws: true
+  }
+},
+</code></pre>
+
+<ul>
+<li><code>/api/</code>：到后端 API 的代理，注意只会代理到后端 <code>/api/</code> 下的地址，并不会暴露出后端 <code>/judger/</code> 的地址</li>
+<li><code>/admin/</code>：到后端 Django Admin 的代理</li>
+<li><code>/static/</code>：到后端静态文件的代理</li>
+<li><code>/ws/</code>：到后端 <code>Websocket</code> 地址的代理</li>
+<li><code>/judger_proxy/</code>：用于测评机的端口转发（可不使用），将 <code>/judger_proxy/port/path</code> 转发到 <code>localhost:port/path</code></li>
+</ul>
               
             </div>
           </div>

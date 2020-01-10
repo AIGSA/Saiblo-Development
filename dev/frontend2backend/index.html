@@ -171,7 +171,7 @@
 <h2 id="_2">用户模块</h2>
 <p>用户模块的功能是控制用户的<strong>注册</strong>、<strong>登陆</strong>、<strong>注销</strong>；或是<strong>获取</strong>、<strong>修改</strong>用户的信息。</p>
 <h3 id="1-url-token">1 URL: token/</h3>
-<h4 id="11-post">1.1 POST方法</h4>
+<h4 id="11-post">1.1 POST 方法</h4>
 <p><strong>用于用户登陆</strong>。验证身份信息，通过则获取新发放的<code>token</code>。用户的所有操作可以通过<code>token</code>进行身份验证。</p>
 <h5 id="111">1.1.1 权限</h5>
 <ul>
@@ -179,8 +179,8 @@
 </ul>
 <h5 id="112">1.1.2 数据</h5>
 <pre><code class="json">{
-    username: String, //表示用户名
-    password: String //表示密码
+  &quot;username&quot;: String, //表示用户名
+  &quot;password&quot;: String //表示密码
 }
 </code></pre>
 
@@ -199,7 +199,7 @@
 </code></pre>
 
 <h3 id="2-url-refresh">2 URL: refresh/</h3>
-<h4 id="21-post">2.1 POST方法</h4>
+<h4 id="21-post">2.1 POST 方法</h4>
 <p>更新用户的<code>token</code>。</p>
 <h5 id="211">2.1.1 权限</h5>
 <ul>
@@ -207,13 +207,13 @@
 </ul>
 <h5 id="212">2.1.2 数据</h5>
 <pre><code class="json">{
-    refresh：String //登录时所获取的refresh token
+    &quot;refresh&quot;：String //登录时所获取的refresh token
 }
 </code></pre>
 
 <h5 id="213">2.1.3 响应</h5>
 <ul>
-<li>200：获取到新的token</li>
+<li>200：获取到新的 token</li>
 </ul>
 <h5 id="214">2.1.4 返回</h5>
 <pre><code class="python">{
@@ -223,7 +223,7 @@
 </code></pre>
 
 <h3 id="3-url-profile">3 URL: profile/</h3>
-<h4 id="31-get">3.1 GET方法</h4>
+<h4 id="31-get">3.1 GET 方法</h4>
 <p>获取当前登录用户的个人信息，可用于判断是否登录。</p>
 <h5 id="311">3.1.1 权限</h5>
 <ul>
@@ -253,7 +253,7 @@
 </code></pre>
 
 <h3 id="4-url-users">4 URL: users/</h3>
-<h4 id="41-get">4.1 GET方法</h4>
+<h4 id="41-get">4.1 GET 方法</h4>
 <p>返回所有注册过的用户信息。</p>
 <h5 id="411">4.1.1 权限</h5>
 <ul>
@@ -282,7 +282,7 @@
 ]
 </code></pre>
 
-<h4 id="42-post">4.2 POST方法</h4>
+<h4 id="42-post">4.2 POST 方法</h4>
 <p>注册一个新的用户。</p>
 <h5 id="421">4.2.1 权限</h5>
 <ul>
@@ -290,9 +290,9 @@
 </ul>
 <h5 id="422">4.2.2 数据</h5>
 <pre><code class="json">{
-    username: String, //表示用户名
-    password: String, //表示密码
-    email: String //表示邮箱
+  &quot;username&quot;: String, //表示用户名
+  &quot;password&quot;: String, //表示密码
+  &quot;email&quot;: String //表示邮箱
 }
 </code></pre>
 
@@ -302,8 +302,8 @@
 <li>400：数据不符合期望(前端应避免)或邮箱/用户名已存在</li>
 </ul>
 <h3 id="5-url-usersusername62">5 URL: users/\&lt;username>/</h3>
-<h4 id="51-get">5.1 GET方法</h4>
-<p>获取用户名为username的用户信息。</p>
+<h4 id="51-get">5.1 GET 方法</h4>
+<p>获取用户名为 username 的用户信息。</p>
 <h5 id="511">5.1.1 权限</h5>
 <ul>
 <li>任何人</li>
@@ -328,7 +328,7 @@
 }
 </code></pre>
 
-<h4 id="52-put">5.2 PUT方法</h4>
+<h4 id="52-put">5.2 PUT 方法</h4>
 <p>修改用户个人信息(不包括密码)。</p>
 <h5 id="521">5.2.1 权限</h5>
 <ul>
@@ -336,11 +336,11 @@
 </ul>
 <h5 id="522">5.2.2 数据</h5>
 <pre><code class="json">{
-    name: String,//表示姓名
-    biography: String, //表示个人简介
-    school: String, //表示所在学校
-    department: String, //表示院系
-    sex: String //必须是“男”、“女”、“保密”三选一
+  &quot;name&quot;: String, //表示姓名
+  &quot;biography&quot;: String, //表示个人简介
+  &quot;school&quot;: String, //表示所在学校
+  &quot;department&quot;: String, //表示院系
+  &quot;sex&quot;: String //必须是“男”、“女”、“保密”三选一
 }
 </code></pre>
 
@@ -349,9 +349,9 @@
 <li>200：修改成功</li>
 <li>400：数据不符合期望(前端应避免)</li>
 </ul>
-<h4 id="53-patch">5.3 PATCH方法</h4>
+<h4 id="53-patch">5.3 PATCH 方法</h4>
 <p>与<code>put</code>方法作用相同。</p>
-<h4 id="54-delete">5.4 DELETE方法</h4>
+<h4 id="54-delete">5.4 DELETE 方法</h4>
 <p>删除该账号。</p>
 <h5 id="541">5.4.1 权限</h5>
 <ul>
@@ -362,16 +362,16 @@
 <li>204：删除成功</li>
 </ul>
 <h3 id="6-url-usersusername62update-password">6 URL: users/\&lt;username>/update-password/</h3>
-<h4 id="61-put">6.1 PUT方法</h4>
-<p>修改用户名为username的用户密码。</p>
+<h4 id="61-put">6.1 PUT 方法</h4>
+<p>修改用户名为 username 的用户密码。</p>
 <h5 id="611">6.1.1 权限</h5>
 <ul>
 <li>本人</li>
 </ul>
 <h5 id="612">6.1.2 数据</h5>
 <pre><code class="json">{
-    old_password: String, //表示原来的密码
-    password: String //表示新密码
+  &quot;old_password&quot;: String, //表示原来的密码
+  &quot;password&quot;: String //表示新密码
 }
 </code></pre>
 
@@ -383,7 +383,7 @@
 <h2 id="_3">小组模块</h2>
 <p>小组用于组织一些用户进行讨论、比赛，由管理者进行管理。小组模块的主要功能有<strong>创建</strong>、<strong>查看</strong>、<strong>修改</strong>小组信息；<strong>审批</strong>、<strong>删除</strong>小组人员或者将小组成员<strong>提升为管理者</strong>、<strong>降为普通成员</strong>；<strong>添加</strong>、<strong>修改</strong>、<strong>删除</strong>比赛；用户<strong>申请</strong>、<strong>取消入组</strong>。</p>
 <h3 id="1-url-groups">1 URL: groups/</h3>
-<h4 id="11-get">1.1 GET方法</h4>
+<h4 id="11-get">1.1 GET 方法</h4>
 <p>获取所有过审的小组信息，便于用户查看。</p>
 <h5 id="111_1">1.1.1 权限</h5>
 <ul>
@@ -412,7 +412,7 @@
 ]
 </code></pre>
 
-<h4 id="12-post">1.2 POST方法</h4>
+<h4 id="12-post">1.2 POST 方法</h4>
 <p>用户申请新建小组。</p>
 <h5 id="121">1.2.1 权限</h5>
 <ul>
@@ -420,9 +420,9 @@
 </ul>
 <h5 id="122">1.2.2 数据</h5>
 <pre><code class="json">{
-    name: String, //表示小组名
-    introduction: String, //表示简介
-    reason: String //表示申请理由
+  &quot;name&quot;: String, //表示小组名
+  &quot;introduction&quot;: String, //表示简介
+  &quot;reason&quot;: String //表示申请理由
 }
 </code></pre>
 
@@ -432,7 +432,7 @@
 <li>400：数据不符合期望（前端应避免）</li>
 </ul>
 <h3 id="2-url-groupsapplying">2 URL: groups/applying/</h3>
-<h4 id="21-get">2.1 GET方法</h4>
+<h4 id="21-get">2.1 GET 方法</h4>
 <p>获取所有申请创建的小组列表，便于超级用户对小组申请进行审批。</p>
 <h5 id="211_1">2.1.1 权限</h5>
 <ul>
@@ -461,8 +461,8 @@
 </code></pre>
 
 <h3 id="3-url-groupsgroup_id62">3 URL: groups/\&lt;group_id>/</h3>
-<h4 id="31-get_1">3.1 GET方法</h4>
-<p>返回目标id的小组信息。</p>
+<h4 id="31-get_1">3.1 GET 方法</h4>
+<p>返回目标 id 的小组信息。</p>
 <h5 id="311_1">3.1.1 权限</h5>
 <ul>
 <li>任何人</li>
@@ -486,8 +486,8 @@
 }
 </code></pre>
 
-<h4 id="32-put">3.2 PUT方法</h4>
-<p>修改目标id的小组信息，如果过审失败则可以靠此重新申请。</p>
+<h4 id="32-put">3.2 PUT 方法</h4>
+<p>修改目标 id 的小组信息，如果过审失败则可以靠此重新申请。</p>
 <h5 id="321">3.2.1 权限</h5>
 <ul>
 <li>创建者</li>
@@ -495,10 +495,10 @@
 </ul>
 <h5 id="321_1">3.2.1 数据</h5>
 <pre><code class="json">{
-    name: String, //表示小组名
-    introduction: String, //表示简介
-    auto_pass: Boolean, //决定用户申请后是否会自动通过
-    accept_application: Boolean //决定是否允许用户主动申请加入
+  &quot;name&quot;: String, //表示小组名
+  &quot;introduction&quot;: String, //表示简介
+  &quot;auto_pass&quot;: Boolean, //决定用户申请后是否会自动通过
+  &quot;accept_application&quot;: Boolean //决定是否允许用户主动申请加入
 }
 </code></pre>
 
@@ -507,7 +507,7 @@
 <ul>
 <li>200：修改成功</li>
 </ul>
-<h4 id="33-patch">3.3 PATCH方法</h4>
+<h4 id="33-patch">3.3 PATCH 方法</h4>
 <p>超级用户审批小组申请。</p>
 <h5 id="331">3.3.1 权限</h5>
 <ul>
@@ -515,7 +515,7 @@
 </ul>
 <h5 id="332">3.3.2 数据</h5>
 <pre><code class="json">{
-    permission: Boolean, //表示通过与否
+  &quot;permission&quot;: Boolean //表示通过与否
 }
 </code></pre>
 
@@ -524,7 +524,7 @@
 <li>200：审批成功</li>
 <li>400：数据不符合期望（前端应避免）</li>
 </ul>
-<h4 id="34-delete">3.4 DELETE方法</h4>
+<h4 id="34-delete">3.4 DELETE 方法</h4>
 <p>创造者可以删除目标小组，无论它是否过审。</p>
 <h5 id="341">3.4.1 权限</h5>
 <ul>
@@ -535,7 +535,7 @@
 <li>204：删除成功</li>
 </ul>
 <h3 id="4-url-usersapplications">4 URL: users/\<username>/applications/</h3>
-<h4 id="41-get_1">4.1 GET方法</h4>
+<h4 id="41-get_1">4.1 GET 方法</h4>
 <p>用户获取自己的所有入组申请。</p>
 <h5 id="411_1">4.1.1 权限</h5>
 <ul>
@@ -572,279 +572,295 @@
 </code></pre>
 
 <h3 id="5-url-usersapplications">5 URL: users/\<username>/applications/\<application_id>/</h3>
-<h4 id="get">GET</h4>
+<h4 id="51-get_1">5.1 GET 方法</h4>
 <p>用户获取入组申请详情。</p>
-<p><strong>权限</strong></p>
+<h5 id="511_1">5.1.1 权限</h5>
 <ul>
 <li>本人</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="512_1">5.1.2 响应</h5>
 <ul>
 <li>200：获取成功</li>
 </ul>
-<p><strong>返回</strong></p>
+<h5 id="513_1">5.1.3 返回</h5>
 <pre><code class="python">{
     'message': '我日天想会会你。',
-    'id': 1, 
+    'id': 1,
     'user': {
-        'name': '赵日天', 
-        'biography': '', 
+        'name': '赵日天',
+        'biography': '',
         'school': '',
-        'department': '', 
-        'sex': '保密', 
-        'username': 'sky', 
+        'department': '',
+        'sex': '保密',
+        'username': 'sky',
         'email': 'sky@saiblo.com',
-        'email_md5': 'f3be03c754c5daf465a339ea9b537d7b', 
+        'email_md5': 'f3be03c754c5daf465a339ea9b537d7b',
         'date_joined': 'Mon, 14 Oct 2019 15:10:52 +0800',
-        'id': 3, 
+        'id': 3,
         'is_active': True
-    }, 
-    'time': 'Mon, 14 Oct 2019 23:35:29 +0800', 
+    },
+    'time': 'Mon, 14 Oct 2019 23:35:29 +0800',
     'group': 1,
     'is_permitted': None
 }
 </code></pre>
 
-<h4 id="put">PUT</h4>
+<h4 id="52-put_1">5.2 PUT 方法</h4>
 <p>用户修改入组申请内容，在被拒绝后调用它会重新发起申请。</p>
-<p><strong>权限</strong></p>
+<h5 id="521_1">5.2.1 权限</h5>
 <ul>
 <li>本人</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>message: 字符串，表示申请理由</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="522_1">5.2.2 数据</h5>
+<pre><code class="json">{
+  &quot;message&quot;: String //表示申请理由
+}
+</code></pre>
+
+<h5 id="523_1">5.2.3 响应</h5>
 <ul>
 <li>200：修改成功</li>
 <li>400：数据不符合期望（前端应避免）</li>
 </ul>
-<h4 id="patch">PATCH</h4>
-<p>同PUT</p>
-<h4 id="delete">DELETE</h4>
+<h4 id="53-patch_1">5.3 PATCH 方法</h4>
+<p>与<code>put</code>方法功能一致。</p>
+<h4 id="54-delete_1">5.4 DELETE 方法</h4>
 <p>用户撤销或删除未通过的申请。</p>
-<p><strong>权限</strong></p>
+<h5 id="541_1">5.4.1 权限</h5>
 <ul>
 <li>本人</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="542_1">5.4.2 响应</h5>
 <ul>
 <li>204：删除成功</li>
 </ul>
-<h3 id="groupsgroup_id62applications">groups/\&lt;group_id>/applications/</h3>
-<h4 id="get_1">GET</h4>
-<p>返回目标id的全部申请。</p>
-<p><strong>权限</strong></p>
+<h3 id="6-url-groupsgroup_id62applications">6 URL: groups/\&lt;group_id>/applications/</h3>
+<h4 id="61-get">6.1 GET 方法</h4>
+<p>返回目标<code>id</code>的全部申请，用于管理员审批入组申请。</p>
+<h5 id="611_1">6.1.1</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="612_1">6.1.2 响应</h5>
 <ul>
 <li>200：获取成功</li>
 </ul>
-<h4 id="post">POST</h4>
+<h4 id="62-post">6.2 POST 方法</h4>
 <p>用户发起向目标小组的申请，要求小组已过审。</p>
-<p><strong>权限</strong></p>
+<h5 id="621">6.2.1 权限</h5>
 <ul>
-<li>已登录</li>
-<li>非成员</li>
+<li>已登录用户，即用户状态为“已登录”</li>
+<li>非小组成员</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>message: 字符串，表示申请理由</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="622">6.2.2 数据</h5>
+<pre><code class="json">{
+  &quot;message&quot;: String //表示申请理由
+}
+</code></pre>
+
+<h5 id="623">6.2.3 响应</h5>
 <ul>
 <li>201：申请成功</li>
 <li>400：数据不符合期望（前端应避免）或用户已在组中</li>
 <li>403：小组禁制任何人加入</li>
 <li>404：小组未过审</li>
 </ul>
-<h3 id="groupsgroup_id62applicationsapplication_id62">groups/\&lt;group_id>/applications/\&lt;application_id>/</h3>
-<h4 id="get_2">GET</h4>
-<p>获取目标组的目标申请信息。</p>
-<p><strong>权限</strong></p>
+<h3 id="7-url-groupsgroup_id62applicationsapplication_id62">7 URL: groups/\&lt;group_id>/applications/\&lt;application_id>/</h3>
+<h4 id="71-get">7.1 GET 方法</h4>
+<p>获取组编号为<code>group_id</code>的申请编号为<code>application_id</code>的申请信息。用于管理员查看申请信息。</p>
+<h5 id="711">7.1.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="712">7.1.2 响应</h5>
 <ul>
 <li>200：获取成功</li>
 <li>404：小组/申请不存在或申请不属于该小组</li>
 </ul>
-<h4 id="put_1">PUT</h4>
+<h4 id="72-put">7.2 PUT 方法</h4>
 <p>审批目标申请，需要小组管理员以上权限。</p>
-<p><strong>权限</strong></p>
+<h5 id="721">7.2.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>permit：布尔值，表示是否通过申请</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="722">7.2.2 数据</h5>
+<pre><code class="json">{
+  &quot;permit&quot;: Boolean //表示是否通过申请
+}
+</code></pre>
+
+<h5 id="723">7.2.3 响应</h5>
 <ul>
 <li>400：数据不符合期望（前端应避免）</li>
 <li>200：审批成功</li>
 </ul>
-<p><strong>PATCH</strong></p>
-<p>同PUT</p>
-<h4 id="delete_1">DELETE</h4>
+<h4 id="73-patch">7.3 PATCH 方法</h4>
+<p>与<code>put</code>方法有着相同的功能。</p>
+<h4 id="74-delete">7.4 DELETE 方法</h4>
 <p>删除(已被通过的冗余)目标申请。</p>
-<p><strong>权限</strong></p>
+<h5 id="741">7.4.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="742">7.4.2 响应</h5>
 <ul>
 <li>204：清除成功</li>
 </ul>
-<h3 id="groupsusers">groups/\<group_id>/users/</h3>
-<p><strong>GET</strong></p>
-<p>获取该组内所有成员（不包括创建者）的信息。</p>
-<p><strong>权限</strong></p>
+<h3 id="8-url-groupsusers">8 URL: groups/\<group_id>/users/</h3>
+<h4 id="81-get">8.1 GET 方法</h4>
+<p>获取该组内所有成员（不包括创建者）的信息。用于管理员查看与管理小组成员。</p>
+<h5 id="811">8.1.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="812">8.1.2 响应</h5>
 <ul>
 <li>200：获取成功</li>
 </ul>
-<h4 id="post_1">POST</h4>
+<h4 id="82-post">8.2 POST 方法</h4>
 <p>向组内添加成员（注：现设定不需要经过同意）。</p>
-<p><strong>权限</strong></p>
+<h5 id="821">8.2.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>username: 字符串，表示目标成员用户名</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="822">8.2.2 数据</h5>
+<pre><code class="json">{
+  &quot;username&quot;: String //表示目标成员用户名
+}
+</code></pre>
+
+<h5 id="823">8.2.3 响应</h5>
 <ul>
 <li>201：添加成功</li>
 <li>400：数据不符合期望（前端应避免）或用户不存在或用户已经在组中</li>
 </ul>
-<h3 id="groupsusers_1">groups/\<group_id>/users/\<username>/</h3>
-<h4 id="put_2">PUT</h4>
+<h3 id="9-url-groupsusers">9 URL: groups/\<group_id>/users/\<username>/</h3>
+<h4 id="91-put">9.1 PUT 方法</h4>
 <p>修改一个组员的管理员权限。</p>
-<p><strong>权限</strong></p>
+<h5 id="911">9.1.1 权限</h5>
 <ul>
 <li>创建者</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>management: bool，表示是否设为管理员</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="912">9.1.2 数据</h5>
+<pre><code class="json">{
+  &quot;management&quot;: Boolean //表示是否设为管理员
+}
+</code></pre>
+
+<h5 id="913">9.1.3 响应</h5>
 <ul>
 <li>201：修改成功</li>
 <li>400：数据不符合期望（前端应避免）</li>
 </ul>
-<h4 id="patch_1">PATCH</h4>
-<p>同PUT。</p>
-<h4 id="delete_2">DELETE</h4>
-<p>踢出一个组员或自己退组，需注意创建者无法通过此接口退群，否则会404，如果需要解散群请delete小组。</p>
-<p><strong>权限</strong></p>
+<h4 id="92-patch">9.2 PATCH 方法</h4>
+<p>与<code>put</code>方法有着相同的功能。</p>
+<h4 id="93-delete">9.3 DELETE 方法</h4>
+<p>踢出一个组员或自己退组，需注意创建者无法通过此接口退群，否则会 404，如果需要解散群请 delete 小组。</p>
+<h5 id="931">9.3.1 权限</h5>
 <ul>
-<li>更高权限或本人</li>
+<li>本人</li>
+<li>在小组内具有着比对象更高的权限</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="932">9.3.2 响应</h5>
 <ul>
 <li>204：踢出成功</li>
 </ul>
-<h3 id="groupsgroup_id62notices">groups/\&lt;group_id>/notices/</h3>
-<h4 id="get_3">GET</h4>
-<p>查看目标id小组所有公告，需要是小组成员(这一点可修改)。</p>
-<p><strong>权限</strong></p>
+<h3 id="10-url-groupsgroup_id62notices">10 URL: groups/\&lt;group_id>/notices/</h3>
+<h4 id="101-get">10.1 GET 方法</h4>
+<p>查看目标 id 小组所有公告，需要是小组成员(这一点可修改)。</p>
+<h5 id="1011">10.1.1 权限</h5>
 <ul>
 <li>组成员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="1012">10.1.2 响应</h5>
 <ul>
-<li>200：获取成功，返回json数据</li>
+<li>200：获取成功，返回 json 数据</li>
 <li>404：小组未过审</li>
 </ul>
-<p><strong>返回</strong></p>
+<h5 id="1013">10.1.3 返回</h5>
 <pre><code class="python">[
     {
         'title': '测试公告',
         'content': '公告测试',
-        'group': 1, 
-        'last_editor': 'moon', 
-        'id': 1, 
+        'group': 1,
+        'last_editor': 'moon',
+        'id': 1,
         'time': 'Mon, 14 Oct 2019 23:34:31 +0800',
         'publisher': 'moon'
     },
+    ...
 ]
 </code></pre>
 
-<h4 id="post_2">POST</h4>
+<h4 id="102-post">10.2 POST 方法</h4>
 <p>发布新公告。</p>
-<p><strong>权限</strong></p>
+<h5 id="1021">10.2.1 权限</h5>
 <ul>
 <li>需要有小组管理员以上权限</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>title: 字符串，表示公告标题</li>
-<li>content: 字符串，表示公告内容</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="1022">10.2.2 数据</h5>
+<pre><code class="json">{
+  &quot;title&quot;: String, //表示公告标题
+  &quot;content&quot;: String //表示公告内容
+}
+</code></pre>
+
+<h5 id="1023">10.2.3 响应</h5>
 <ul>
 <li>201：发布成功</li>
 <li>400：数据不符合期望（前端应避免）</li>
 <li>404：小组未过审</li>
 </ul>
-<h3 id="groups">groups/\<group_id\>/notices/\<notice_id>/</h3>
-<h4 id="get_4">GET</h4>
-<p>获取目标id小组目标id公告内容。</p>
-<p><strong>权限</strong></p>
+<h3 id="11-url-groups">11 URL: groups/\<group_id\>/notices/\<notice_id>/</h3>
+<h4 id="111-get">11.1 GET 方法</h4>
+<p>获取目标 id 小组目标 id 公告内容。</p>
+<h5 id="1111">11.1.1 权限</h5>
 <ul>
 <li>组成员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="1112">11.1.2 响应</h5>
 <ul>
 <li>200：获取成功</li>
 </ul>
-<p><strong>返回</strong></p>
+<h5 id="1113">11.1.3 返回</h5>
 <pre><code class="python">{
     'title': '测试公告',
     'content': '公告测试',
-    'group': 1, 
-    'last_editor': 'moon', 
-    'id': 1, 
+    'group': 1,
+    'last_editor': 'moon',
+    'id': 1,
     'time': 'Mon, 14 Oct 2019 23:34:31 +0800',
     'publisher': 'moon'
 }
 </code></pre>
 
-<h4 id="put_3">PUT</h4>
-<p>修改目标id小组目标id公告内容。</p>
-<p><strong>权限</strong></p>
+<h4 id="112-put">11.2 PUT 方法</h4>
+<p>修改目标 id 小组目标 id 公告内容。</p>
+<h5 id="1121">11.2.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>数据</strong></p>
-<ul>
-<li>title: 字符串，表示修改后标题</li>
-<li>content: 字符串，表示修改后内容</li>
-</ul>
-<p><strong>响应</strong></p>
+<h5 id="1122">11.2.2 数据</h5>
+<pre><code class="json">{
+  &quot;title&quot;: String, //表示修改后标题
+  &quot;content&quot;: String //表示修改后内容
+}
+</code></pre>
+
+<h5 id="1123">11.2.3 响应</h5>
 <ul>
 <li>200：修改成功</li>
 <li>400：数据不符合期望（前端应避免）</li>
 </ul>
-<h4 id="patch_2">PATCH</h4>
-<p>同PUT</p>
-<h4 id="deelte">DEELTE</h4>
-<p>删除目标id小组的目标id公告</p>
-<p><strong>权限</strong></p>
+<h4 id="113-patch">11.3 PATCH 方法</h4>
+<p>与<code>put</code>方法有着相同的功能。</p>
+<h4 id="114-deelte">11.4 DEELTE 方法</h4>
+<p>删除目标 <code>id</code> 小组的目标 <code>id</code> 公告。</p>
+<h5 id="1141">11.4.1 权限</h5>
 <ul>
 <li>管理员</li>
 </ul>
-<p><strong>响应</strong></p>
+<h5 id="1142">11.4.2 响应</h5>
 <ul>
 <li>204：删除成功</li>
 </ul>
