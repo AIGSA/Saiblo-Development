@@ -1,6 +1,6 @@
 # 前端和评测
 
-整个 ***Saiblo*** 网站包括三个部分，即**前端**、**后端**与**评测端**。这个文档主要讲的是**前端**与**评测端**的交互。这个交互主要在**房间系统**上进行。
+整个 **_Saiblo_** 网站包括三个部分，即**前端**、**后端**与**评测端**。这个文档主要讲的是**前端**与**评测端**的交互。这个交互主要在**房间系统**上进行。
 
 ## 交互示意图
 
@@ -22,10 +22,10 @@
 
 ```json
 {
-    'type': 'create_room', //指令类型
-    'user': user_object, //创建房间的用户信息，与后端user结构相同
-    'game': game_object, //创建房间的游戏信息，与后端game结构相同
-    'private': Boolean //房间是否为私密房间
+  "type": "create_room", //指令类型
+  "user": user_object, //创建房间的用户信息，与后端user结构相同
+  "game": game_object, //创建房间的游戏信息，与后端game结构相同
+  "private": Boolean //房间是否为私密房间
 }
 ```
 
@@ -33,8 +33,8 @@
 
 ```json
 {
-    'type': 'push_room_list', //指令类型
-    'room': room_list //房间列表
+  "type": "push_room_list", //指令类型
+  "room": room_list //房间列表
 }
 ```
 
@@ -42,11 +42,11 @@
 
 ```json
 {
-    'id': room_id, //房间id
-    'host': host_username, //房主的用户名
-    'users': user_object_list, //房间内用户列表，每一个元素均为user_object，与后端user结构相同
-    'game': game_id, //游戏id
-    'private': Boolean //是否私密
+  "id": room_id, //房间id
+  "host": host_username, //房主的用户名
+  "users": user_object_list, //房间内用户列表，每一个元素均为user_object，与后端user结构相同
+  "game": game_id, //游戏id
+  "private": Boolean //是否私密
 }
 ```
 
@@ -54,8 +54,8 @@
 
 ```json
 {
-    'type': 'add_room', //指令类型
-    'user': user_object //加入房间的用户信息，与后端user结构相同
+  "type": "add_room", //指令类型
+  "user": user_object //加入房间的用户信息，与后端user结构相同
 }
 ```
 
@@ -63,9 +63,9 @@
 
 ```json
 {
-    'type': 'room_created', //指令类型
-    'user': username, //创建房间的用户的用户名
-    'room': room_id //房间id，用以根据id进入到房间页面
+  "type": "room_created", //指令类型
+  "user": username, //创建房间的用户的用户名
+  "room": room_id //房间id，用以根据id进入到房间页面
 }
 ```
 
@@ -75,30 +75,34 @@
 
 ```json
 {
-    'type': 'ready_human', //加入人类玩家
-    'user': username, //加入座位的用户的用户名
-    'seat': seat //加入的座位编号
-}
-
-{
-    'type': 'cancel_human', //人类玩家退出座位
-    'user': username, //退出座位的用户的用户名
-    'seat': seat //退出的座位编号
+  "type": "ready_human", //加入人类玩家
+  "user": username, //加入座位的用户的用户名
+  "seat": seat //加入的座位编号
 }
 ```
 
-**[⑧]** 1.确认已经连接到评测端；2.用户点击房间中的某一个座位添加一个AI加入游戏或者是踢出这个座位上的AI，将这一信息发送给评测端。
+```json
+{
+  "type": "cancel_human", //人类玩家退出座位
+  "user": username, //退出座位的用户的用户名
+  "seat": seat //退出的座位编号
+}
+```
+
+**[⑧]** 1.确认已经连接到评测端；2.用户点击房间中的某一个座位添加一个 AI 加入游戏或者是踢出这个座位上的 AI，将这一信息发送给评测端。
 
 ```json
 {
-    'type': 'ready_ai', //加入AI
-    'seat': seat, //座位编号
-    'ai': ai_object //AI的信息
+  "type": "ready_ai", //加入AI
+  "seat": seat, //座位编号
+  "ai": ai_object //AI的信息
 }
+```
 
+```json
 {
-    'type': 'cancel_ai', //踢出AI
-    'seat': seat //踢出的座位编号
+  "type": "cancel_ai", //踢出AI
+  "seat": seat //踢出的座位编号
 }
 ```
 
@@ -108,16 +112,17 @@
 
 ```json
 {
-    'type': 'status', //指令类型
-    'users': user_object_list, //房间内用户列表
-    'players': player_list, //房间内玩家列表(指在座位上的玩家)
-    'game': game_id, //游戏id
-    'game_status': game_status, // 游戏是否开始
-    'configs': { //房间的配置信息
-        'attr1': { 'name': String, 'value': defaultvalue1, 'hint': String }, //配置名、默认值、配置显示的内容
-        'attr2': { 'name': String, 'value': defaultvalue2, 'hint': String },
-        ...
-    }
+  "type": "status", //指令类型
+  "users": user_object_list, //房间内用户列表
+  "players": player_list, //房间内玩家列表(指在座位上的玩家)
+  "game": game_id, //游戏id
+  "game_status": game_status, // 游戏是否开始
+  "configs": {
+    //房间的配置信息
+    "attr1": { "name": String, "value": defaultvalue1, "hint": String }, //配置名、默认值、配置显示的内容
+    "attr2": { "name": String, "value": defaultvalue2, "hint": String },
+    ...
+  }
 }
 ```
 
@@ -133,12 +138,13 @@
 
 ```json
 {
-    'type': 'edit_game_configs', //指令类型
-    'configs': { //配置的内容
-        'attr1': value1,
-        'attr2': value2,
-        ...
-    }
+  "type": "edit_game_configs", //指令类型
+  "configs": {
+    //配置的内容
+    "attr1": value1,
+    "attr2": value2,
+    ...
+  }
 }
 ```
 
@@ -146,7 +152,7 @@
 
 ```json
 {
-    'type': 'start' //指令类型
+  "type": "start" //指令类型
 }
 ```
 
