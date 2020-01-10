@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>反向代理 - Saiblo 平台开发维护手册</title>
+  <title>评测机部署 - Saiblo 平台开发维护手册</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u53cd\u5411\u4ee3\u7406";
-    var mkdocs_page_input_path = "ops/proxy.md";
+    var mkdocs_page_name = "\u8bc4\u6d4b\u673a\u90e8\u7f72";
+    var mkdocs_page_input_path = "ops/judger.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -61,23 +61,23 @@
                     
     <a class="" href="../deployment/">平台部署</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">反向代理</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#_1">反向代理</a></li>
-    
-
-    </ul>
+    <a class="" href="../proxy/">反向代理</a>
                 </li>
                 <li class="">
                     
     <a class="" href="../auto_match/">定时对局抽取</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../judger/">评测机部署</a>
+    <a class="current" href="./">评测机部署</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#_1">评测机部署</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -143,7 +143,7 @@
         
       
     
-    <li>反向代理</li>
+    <li>评测机部署</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -153,44 +153,10 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="_1">反向代理</h2>
-<p>在 <code>frontend/nuxt.config.js</code> 中，配置了若干反向代理规则：</p>
-<pre><code class="js">proxy: {
-  &quot;/api/&quot;: {
-    target: &quot;http://localhost:8000&quot;,
-    autoRewrite: true
-  },
-  &quot;/admin/&quot;: {
-    target: &quot;http://localhost:8000&quot;
-  },
-  &quot;/static/&quot;: {
-    target: &quot;http://localhost:8000&quot;
-  },
-  &quot;/ws&quot;: {
-    target: &quot;http://localhost:8000&quot;,
-    ws: true
-  },
-  &quot;/judger_proxy/&quot;: {
-    target: &quot;http://localhost:8000&quot;,
-    router: function(req) {
-      let port = req.url.split(&quot;/&quot;)[2]
-      return &quot;http://localhost:&quot; + port
-    },
-    pathRewrite: function(path) {
-      return path.replace(/\/judger_proxy\/\d+\//, &quot;/&quot;)
-    },
-    ws: true
-  }
-},
-</code></pre>
-
-<ul>
-<li><code>/api/</code>：到后端 API 的代理，注意只会代理到后端 <code>/api/</code> 下的地址，并不会暴露出后端 <code>/judger/</code> 的地址</li>
-<li><code>/admin/</code>：到后端 Django Admin 的代理</li>
-<li><code>/static/</code>：到后端静态文件的代理</li>
-<li><code>/ws/</code>：到后端 <code>Websocket</code> 地址的代理</li>
-<li><code>/judger_proxy/</code>：用于测评机的端口转发（可不使用），将 <code>/judger_proxy/port/path</code> 转发到 <code>localhost:port/path</code></li>
-</ul>
+                <h2 id="_1">评测机部署</h2>
+<p>Saiblo 平台后端采用 Websocket 的方式与测评机建立链接，当且仅当测评机与后端建立连接时，平台认为测评机上线，并会给测评机分配对应的编译/评测任务。</p>
+<p>具体地，评测机需要连接到平台后端地址，如 <code>127.0.0.1:8000</code>。在初始化时评测机可以选择是否提供房间功能，如果提供，则测评机还需给平台后端传入其房间系统服务器的链接地址，连接成功后在前端的服务器列表中便会看到该测评机。</p>
+<p>测评机的具体配置请参考测评组的文档。</p>
               
             </div>
           </div>
@@ -198,10 +164,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../auto_match/" class="btn btn-neutral float-right" title="定时对局抽取">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../dev/arch/" class="btn btn-neutral float-right" title="平台架构">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../deployment/" class="btn btn-neutral" title="平台部署"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../auto_match/" class="btn btn-neutral" title="定时对局抽取"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -227,10 +193,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../deployment/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../auto_match/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../auto_match/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../dev/arch/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
