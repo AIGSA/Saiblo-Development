@@ -28,14 +28,14 @@
 
 | 函数       | 参数 | 返回值 | 解释                                                         |
 | ---------- | ---- | ------ | ------------------------------------------------------------ |
-| init_websocket | null | null   | yyt |
-| websocket_on_message | event | null | yyt |
+| init_websocket | null | null   | 初始化与评测端连接的Websocket |
+| websocket_on_message | event | null | 在Websocket收到消息之后的处理函数 |
 | send_current_state | null | null | yyt |
 | show_compile_message | 编译信息与编译状态 | null | 弹出显示编译信息的弹窗 |
 | select | 选中的分支的编号 | null | 根据分支编号向服务器请求详细信息，并绑定到entity_info上显示 |
 | change_new_file/change_new_version_file | null | null | 判断更换代码文件后文件大小是否不为0 |
 | requireFile | 分支，版本 | 判定结果 | 在分支不使用远程算力且未指定代码文件时需要文件 |
-| isRegularWS |  |  | yyt |
+| isRegularWS |  |  | 判断是否为正确的Websocket地址 |
 | requireWSAddr |  |  |  |
 | requireFOW |  |  |  |
 | entityRequire |  |  |  |
