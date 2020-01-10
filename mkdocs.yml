@@ -21,5 +21,5 @@ nav:
     - '比赛系统': 'frontend/website-frontend-contest.md'
     - '游戏系统': 'frontend/website-frontend-game.md'
     - '小组系统': 'frontend/website-frontend-group.md'
-
+    - '部件': 'frontend/website-frontend-component.md'
 theme: readthedocs
