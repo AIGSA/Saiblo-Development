@@ -23,4 +23,5 @@ nav:
     - '小组系统': 'frontend/website-frontend-group.md'
     - '部件': 'frontend/website-frontend-component.md'
     - '代码系统': 'frontend/website-frontend-code.md'
+    - '房间系统': 'frontend/website-frontend-room.md'
 theme: readthedocs
