@@ -94,23 +94,3 @@
 | 用途 | 查看对局编号为 match id 的对局详情，如果有 HTML 播放器则回放 |
 | 权限 | 登录用户                                                     |
 | 预览 | ![](imgs\match_id.PNG)                                       |
-
-| 属性              | 解释                                                       |
-| ----------------- | ---------------------------------------------------------- |
-| iframe            | 存储网页播放器的一些参数，例如是否全屏，网页播放器地址等等 |
-| match             | 存储的是当前游戏的玩家、游戏等信息，用 asyncData 获取      |
-| player_controller | 存储的是控制播放器的一些参数，例如播放速度、当前帧等等     |
-
-| 函数                | 参数  | 返回值 | 解释                                         |
-| ------------------- | ----- | ------ | -------------------------------------------- |
-| download_replay     | id    | null   | 用于生成一个下载链接，使用户能够下载回放文件 |
-| onLoad              | null  | null   | 在播放器加载好后初始化播放器                 |
-| postMessage         | data  | null   | 向播放器发送指令和数据                       |
-| receiveMessage      | event | null   | 从播放器收到信息并进行处理                   |
-| playerLoadFrame     | null  | null   | 让播放器载入控制器的当前帧                   |
-| playerLoadNextFrame | null  | null   | 让播放器载入控制器的下一帧                   |
-| previousFrame       | null  | null   | 控制器载入前一帧                             |
-| nextFrame           | null  | null   | 控制器载入后一帧                             |
-| playNextFrame       | null  | null   | 控制器播放下一帧(播放将是连续的)             |
-| changeSpeed         | null  | null   | 将控制器播放速度设置成下一档                 |
-| resetPlayer         | null  | null   | 重置控制器到初始帧                           |
