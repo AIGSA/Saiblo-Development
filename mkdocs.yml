@@ -15,5 +15,11 @@ nav:
     - '前端与后端': 'dev/frontend2backend.md'
     - '前端与评测端': 'dev/frontend2judger.md'
     - '后端与评测端': 'dev/backend2judger.md'
+- 前端手册:
+    - '概述': 'frontend/website-frontend.md'
+    - '用户系统': 'frontend/website-frontend-user.md'
+    - '比赛系统': 'frontend/website-frontend-contest.md'
+    - '游戏系统': 'frontend/website-frontend-game.md'
+    - '小组系统': 'frontend/website-frontend-group.md'
 
 theme: readthedocs
