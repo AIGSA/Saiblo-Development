@@ -52,14 +52,14 @@
 | 用途 | 管理提交的代码              |
 | 预览 | ![](imgs/code-selector.PNG) |
 
-| 传入参数       | 解释                                |
-| -------------- | ----------------------------------- |
-| username       | 代码管理的是所有与 gameId 有关的 AI |
-| gameId         | 是否允许远端算力                    |
-| originEntity   |                                     |
-| originEntities |                                     |
-| header         |                                     |
-| callback       |                                     |
+| 传入参数       | 解释                               |
+| -------------- | ---------------------------------- |
+| username       | 选择 AI 的用户的用户名             |
+| gameId         | 所要选择的 AI 所属的游戏的编号     |
+| originEntity   | AI 的原始 entity                   |
+| originEntities | 可以选择的 AI 的原始列表           |
+| header         | 组件显示的 header                  |
+| callback       | 用户选择完 AI 后需要调用的回调函数 |
 
 | 属性           | 解释 |
 | -------------- | ---- |
