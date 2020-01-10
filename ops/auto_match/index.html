@@ -79,6 +79,10 @@
                     
     <a class="" href="../judger/">评测机部署</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../wiki/">Wiki 管理</a>
+                </li>
     </ul>
 	    </li>
           
@@ -154,11 +158,13 @@
             <div class="section">
               
                 <h2 id="_1">定时对局抽取</h2>
-<p>在比赛系统中，对局会根据一定的规则自动生成，需要利用 <code>crontab</code> 来添加定时任务：</p>
+<p>在比赛系统中，对局会根据一定的规则定时自动生成。这利用了 Linux 系统的 <code>crontab</code>，故在使用该功能之前需要预先安装 <code>crontab</code> 依赖。</p>
+<p>确认 <code>crontab</code> 启动后，执行以下命令添加定时对局抽取任务</p>
 <pre><code class="bash">python manage.py crontab add
 </code></pre>
 
-<p>这就会添加定时对局抽取的任务，可以在 <code>backend/auth_match.log</code> 下查看自动对局生成的日志。</p>
+<p>每间隔 3 分钟便会添加定时对局抽取的任务，如需修改生成对局的间隔，请在 <code>backend/app/settings.py</code> 的 CRONJOBS 配置中修改。</p>
+<p>可以在 <code>backend/auth_match.log</code> 下查看定时对局抽取的日志。</p>
               
             </div>
           </div>
