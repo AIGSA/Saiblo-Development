@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>平台部署 - Saiblo 平台开发维护手册</title>
+  <title>Wiki 管理 - Saiblo 平台开发维护手册</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u5e73\u53f0\u90e8\u7f72";
-    var mkdocs_page_input_path = "ops/deployment.md";
+    var mkdocs_page_name = "Wiki \u7ba1\u7406";
+    var mkdocs_page_input_path = "ops/wiki.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -57,23 +57,9 @@
 		
     <span class="caption-text">运维手册</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">平台部署</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#_1">部署方式</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#docker">Docker 部署（不推荐）</a></li>
-        
-            <li><a class="toctree-l4" href="#_2">本机部署</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../deployment/">平台部署</a>
                 </li>
                 <li class="">
                     
@@ -87,9 +73,15 @@
                     
     <a class="" href="../judger/">评测机部署</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../wiki/">Wiki 管理</a>
+    <a class="current" href="./">Wiki 管理</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#wiki">Wiki 系统</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -182,7 +174,7 @@
         
       
     
-    <li>平台部署</li>
+    <li>Wiki 管理</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -192,60 +184,19 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="_1">部署方式</h2>
-<p>将 Git 仓库 clone 到本地</p>
-<pre><code class="bash">git clone https://git.net9.org/Sengxian/Saiblo
-cd Saiblo
+                <h2 id="wiki">Wiki 系统</h2>
+<p>Saiblo 平台采用 <a href="https://www.mkdocs.org/">Mkdocs</a> 作为 Wiki 系统，在安装后端 Python 的依赖时，应当已经安装过 Mkdocs 依赖。以下为 <code>mkdocs/</code> 文件夹的目录结构</p>
+<pre><code>mkdocs
+├── docs # 文档存放地址
+├── mkdocs.yml # 配置文件
+└── site # 生成的文件
 </code></pre>
 
-<h3 id="docker">Docker 部署（不推荐）</h3>
-<p>使用 Dockerfile 构建镜像并自动化部署</p>
-<pre><code class="bash">docker build -t saiblo .
-docker run -d -p 127.0.0.1:3000:80 --name saiblo saiblo
-docker start saiblo
+<p>其中 <code>site</code> 是 Mkdocs 生成的 Wiki 站点源代码，这需要通过 Mkdocs 构建生成</p>
+<pre><code class="bash">mkdocs build
 </code></pre>
 
-<p>网站将会在 <code>127.0.0.1:3000</code> 上启动，你可以修改为 <code>0.0.0.0:80</code> 监听来自所有地址的链接。</p>
-<p>这种方法能迅速启动一个 Saiblo 实例，但不推荐用于生产环境。</p>
-<h3 id="_2">本机部署</h3>
-<h4 id="_3">依赖条件</h4>
-<p>需要在系统中安装以下依赖</p>
-<ul>
-<li>Node.js</li>
-<li>Python3</li>
-<li>Redis</li>
-</ul>
-<p>其中 Redis 将作为后端的缓存服务器，需要自行配置并运行，后端默认 Redis 地址为  <code>127.0.0.1:6379</code>（可以在 <code>backend/app/settings.py</code> 的 <code>CACHES</code>  处进行更改）。</p>
-<h4 id="_4">安装依赖</h4>
-<p>安装前后端所需的依赖包，推荐使用 virtualenv 来管理 Python 环境。</p>
-<pre><code class="bash">cd frontend
-npm install
-cd ../backend
-pip install -r requirements.txt
-</code></pre>
-
-<h4 id="_5">初始化数据库</h4>
-<pre><code class="bash">cd backend
-python manage.py migrate
-python manage.py loadtestdata # 如果有需要，可以载入这套测试数据，包含两个游戏以及三个小组
-</code></pre>
-
-<h4 id="_6">启动前端</h4>
-<pre><code class="bash">cd frontend
-npm run build # 编译前端
-export NUXT_HOST=0.0.0.0 # 指定监听地址
-export NUXT_PORT=80 # 指定端口
-npm run start # 启动前端
-</code></pre>
-
-<h4 id="_7">启动后端</h4>
-<pre><code class="bash">cd backend
-uvicorn app.asgi:application --workers 1 --port 8000 --host 127.0.0.1
-# 以 1 个 worker 启动后端，如有需要可以增加 worker 数量，但需要换用 MySQL 等并发友好的数据库，否则会在访问过快时死锁
-</code></pre>
-
-<h4 id="_8">可持久化运行</h4>
-<p>推荐使用 <code>supervisor</code> 配置服务，也可使用 <code>tmux</code> 来可持久化运行前后端</p>
+<p>我们配置了 <code>frontend/static/wiki</code> 指向 <code>mkdocs/site</code> 的软连接，在执行 <code>mkdocs build</code> 之后前端应能及时看到文档的变化。</p>
               
             </div>
           </div>
@@ -253,10 +204,10 @@ uvicorn app.asgi:application --workers 1 --port 8000 --host 127.0.0.1
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../proxy/" class="btn btn-neutral float-right" title="反向代理">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../dev/arch/" class="btn btn-neutral float-right" title="平台架构">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="概览"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../judger/" class="btn btn-neutral" title="评测机部署"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -282,10 +233,10 @@ uvicorn app.asgi:application --workers 1 --port 8000 --host 127.0.0.1
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../judger/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../proxy/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../dev/arch/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

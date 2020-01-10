@@ -18,7 +18,7 @@
   <script>
     // Current page data
     var mkdocs_page_name = "\u540e\u7aef";
-    var mkdocs_page_input_path = "dev\\backend.md";
+    var mkdocs_page_input_path = "dev/backend.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -71,11 +71,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/judger.md">评测机部署</a>
+    <a class="" href="../../ops/judger/">评测机部署</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/wiki.md">Wiki 管理</a>
+    <a class="" href="../../ops/wiki/">Wiki 管理</a>
                 </li>
     </ul>
 	    </li>
@@ -97,6 +97,17 @@
     <a class="current" href="./">后端</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#_1">后端</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#_2">模型</a></li>
+        
+            <li><a class="toctree-l4" href="#_23">权限</a></li>
+        
+        </ul>
+    
+
     </ul>
                 </li>
                 <li class="">
@@ -181,7 +192,251 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="_1">后端</h1>
+<p>后端主要用django-rest架构完成，作为了一个API服务器为前端提供数据，为此使用到以下<strong>核心库</strong>：</p>
+<ul>
+<li>django：基本框架库</li>
+<li>djangoresetframework：提供rest接口</li>
+<li>djangorestframework-simplejwt：提供jwt认证服务</li>
+<li>django-crontab：定时执行任务，用于跑天梯赛等</li>
+</ul>
+<h2 id="_2">模型</h2>
+<p>作为django下开发数据库的数据库的基础，本着精简的原则设计了各种model，在backend/saiblo/models文件夹中定义了所有模型，下面在描述模型所在文件时均是相对该文件夹的相对路径。</p>
+<p>注：如无特殊说明，模型将继承自<code>django.db.models.Model</code>，且默认包含了自增主键字段<code>id</code>。</p>
+<h3 id="user">User</h3>
+<p>继承自<code>AbstrackUser</code>，作为网站的用户模型，在user.py中。</p>
+<h4 id="_3">字段</h4>
+<p><code>AbstrackUser</code>本来包含以下字段：</p>
+<ul>
+<li>username：用户名，仅限字母与数字，唯一</li>
+<li>last_login：最近登陆时间，自动更新</li>
+<li>is_superuser：bool，是否是超级用户</li>
+<li>first_name &amp; last_name：<strong>未使用</strong></li>
+<li>email：邮箱号，唯一</li>
+<li>is_staff：bool，是否有django管理网站访问权限</li>
+<li>is_active：bool，用户是否已激活</li>
+<li>date_joined：注册时间，自动生成</li>
+</ul>
+<p>此外，<code>User</code>额外添加了以下字段：</p>
+<ul>
+<li>name：真实姓名，支持汉字</li>
+<li>nickname：昵称，目前<strong>未使用</strong></li>
+<li>biography：个人简介</li>
+<li>school：学校</li>
+<li>department：院系</li>
+<li>sex：性别，必须是[”男“，”女“，”保密“]之一</li>
+<li>email_md5：email的md5值，单独存储它以便于前端加载头像</li>
+</ul>
+<h3 id="group">Group</h3>
+<p>网站的小组模型，在group.py中。</p>
+<h4 id="_4">字段</h4>
+<ul>
+<li>name：小组名</li>
+<li>introduction：小组简介</li>
+<li>reason：小组创建理由</li>
+<li>size：小组人数，该字段会在小组save时自动变更</li>
+<li>creator：小组创建者，是一个指向<code>User</code>的多对一外键</li>
+<li>managers：小组管理员，是一个指向<code>User</code>的多对多外键</li>
+<li>members：小组普通成员，是一个指向<code>User</code>的多对多外键</li>
+<li>applicants：小组的申请者，是一个指向<code>User</code>的多对多外键，通过<code>Application</code>记录</li>
+<li>created_time：小组创建时间，自动生成</li>
+<li>is_permitted：bool，小组是否已被网站管理员批准创建，True为过审，False为驳回，None为未处理</li>
+<li>auto_pass：bool，小组是否自动处理申请(自动处理即自动通过)</li>
+<li>accept_application：bool，小组是否允许被申请</li>
+<li>visible：bool，小组是否可见，仅一些逻辑上的小组会处于不可见状态</li>
+</ul>
+<h4 id="_5">说明</h4>
+<ol>
+<li>accept_application设置为Flase时小组为”仅允许管理员邀请加入“，当它设置为True时auto_pass才有意义，此情况下auto_pass设置为True表示”允许任何人加入“，Flase表示”需要管理员审核后加入“。</li>
+<li>creator、managers、members所包含的User互斥，它们数量的总和为小组人数(其中creator只有一个且不可更改)，类似于QQ群的管理结构。</li>
+</ol>
+<h3 id="application">Application</h3>
+<p>成员加入小组的申请的模型，在application.py中。</p>
+<h4 id="_6">字段</h4>
+<ul>
+<li>message：申请理由</li>
+<li>user：申请的用户，指向User的多对一外键</li>
+<li>group：申请的小组，指向Group的多对一外键</li>
+<li>time：申请/批准时间，自动更新</li>
+<li>is_permitted：bool，申请是否通过，True为通过，False为拒绝，None为未审核</li>
+</ul>
+<h4 id="_7">约束</h4>
+<ul>
+<li>按time降序排序</li>
+<li>(user, group)构成一组唯一元组以及索引，即一个用户对一个小组最多只能存在一个申请，仅当小组被解散或者用户被踢时会删除申请，拒绝后重新申请不会生成新的申请</li>
+</ul>
+<h3 id="notice">Notice</h3>
+<p>小组发布公告的模型，在notice.py中。</p>
+<h4 id="_8">字段</h4>
+<ul>
+<li>title：公告标题</li>
+<li>content：公告内容，富文本</li>
+<li>pulisher：公告发布者，是一个指向<code>User</code>的多对一外键</li>
+<li>last_editor：公告最后编辑者，是一个指向<code>User</code>的多对一外键</li>
+<li>time：公告最后更新时间，自动更新</li>
+<li>group：公告所属小组，是一个指向<code>Group</code>的多对一外键</li>
+</ul>
+<h4 id="_9">约束</h4>
+<ul>
+<li>按time降序排序</li>
+</ul>
+<h3 id="game">Game</h3>
+<p>游戏的模型，在game.py中。</p>
+<h4 id="_10">字段</h4>
+<ul>
+<li>name：游戏名，字母和数字</li>
+<li>alias：别称，一般为中文全称</li>
+<li>introduction：游戏介绍，富文本</li>
+<li>creator：创建者，是一个指向<code>User</code>的多对一外键</li>
+<li>managers：管理员，是一个指向<code>User</code>的多对多外键</li>
+<li>game_file：游戏播放器等文件包</li>
+<li>create_time：创建时间，自动生成</li>
+<li>update_time：更新时间，自动更新</li>
+<li>is_permitted：bool，游戏是否过审，True为过审，False为驳回，None为未审核</li>
+<li>player_number：游戏支持的人数，字符串，里面包含游戏支持的可能人数，用空格隔开，如"2 4 6 8"</li>
+<li>has_replay_player：bool，游戏是否能看回放</li>
+<li>allow_watch：bool，游戏是否支持对局过程中观战</li>
+<li>support_online_game：bool，游戏是否支持在线对局</li>
+<li>quick_start：bool，游戏是否支持快速匹配人机模式</li>
+<li>allow_remote：bool，游戏是否支持远程算力</li>
+</ul>
+<h3 id="entity">Entity</h3>
+<p>智能体(或者俗称AI)的模型，在entity.py中。</p>
+<h4 id="_11">字段</h4>
+<ul>
+<li>name：名称</li>
+<li>user：用户，是一个指向<code>User</code>的多对一外键</li>
+<li>game：游戏，是一个指向<code>Game</code>的多对一外键</li>
+<li>next_version：下一个版本号，用单增的方法处理一个AI的各个版本号</li>
+<li>created_time：创建时间，自动生成</li>
+<li>language：编程语言，从枚举类<code>Language</code> 中选择，这个类可以继续扩展以支持新的语言</li>
+</ul>
+<h3 id="code">Code</h3>
+<p>一个智能体具体某个版本代码的模型，在code.py中。</p>
+<h4 id="_12">字段</h4>
+<ul>
+<li>id：一个uuid作为主键</li>
+<li>code_file：代码文件</li>
+<li>time：更新时间，自动更新</li>
+<li>entity：所属智能体，是一个指向<code>Entity</code>的多对一外键</li>
+<li>version：版本号，它只针对某一个具体智能体唯一</li>
+<li>remark：注释</li>
+<li>compile_status：编译状态，评测机给出，从Code类常量COMPILE_STATUS取值，目前是['未编译', '编译中', '编译成功', '编译失败']</li>
+<li>compile_message：编译输出，评测机给出，主要用于查看报错信息</li>
+</ul>
+<h4 id="_13">约束</h4>
+<ul>
+<li>按time降序排序</li>
+</ul>
+<h3 id="contest">Contest</h3>
+<p>比赛的模型，在contest.py中。</p>
+<h4 id="_14">字段</h4>
+<ul>
+<li>name：比赛名</li>
+<li>game：游戏，是一个指向<code>Game</code>的多对一外键</li>
+<li>group：小组，是一个指向<code>Group</code>的多对一外键</li>
+<li>begin_time：开始时间</li>
+<li>end_time：结束时间</li>
+<li>create_time：创建时间，自动生成</li>
+<li>introduction：简介，富文本</li>
+<li>promoter：发起人，是一个指向<code>User</code>的多对一外键</li>
+<li>format：赛制，从Contest类的常量成员<code>FORMAT</code>中取值，目前为['cycle', 'ladder', 'free', 'auto']</li>
+</ul>
+<h3 id="participation">Participation</h3>
+<p>用户参加比赛的记录信息的模型，在contest.py中。</p>
+<h4 id="_15">字段</h4>
+<ul>
+<li>contest：比赛，是一个指向<code>Contest</code>的多对一外键</li>
+<li>user：用户，是一个指向<code>User</code>的多对一外键</li>
+<li>code：代码，是一个指向<code>Code</code>的多对一外键</li>
+<li>socre：天梯分</li>
+<li>joined_time：加入时间，自动生成</li>
+</ul>
+<h4 id="_16">约束</h4>
+<ul>
+<li>按score升序排序</li>
+<li>对于一组('contest', 'user')其Participation唯一</li>
+</ul>
+<h4 id="_17">说明</h4>
+<ol>
+<li>当用户加入比赛时会自动生成相应的Participation，退出(取消出战AI)时会删除该记录，此时天梯分将被清除</li>
+<li>用户参加比赛(指定比赛的出战AI)时只需要Pariticipation记录即可，而对游戏设置出战AI则需要用到下面的ActivateCode</li>
+</ol>
+<h3 id="activatecode">ActivateCode</h3>
+<p>表示游戏的出战AI的模型，在code.py中。</p>
+<h4 id="_18">字段</h4>
+<ul>
+<li>user：用户，是一个指向<code>User</code>的多对一外键</li>
+<li>game：游戏，是一个指向<code>Game</code>的多对一外键</li>
+<li>code：代码，是一个指向<code>Code</code>的多对一外键</li>
+<li>time：更新时间，自动更新</li>
+<li>part：天梯记录信息，是一个指向<code>Participation</code>的一对一外键，可以为空</li>
+</ul>
+<h4 id="_19">约束</h4>
+<ul>
+<li>对于一组('user', 'game')其ActivateCode是唯一的</li>
+</ul>
+<h3 id="match">Match</h3>
+<p>记录对局的模型，在match.py中。</p>
+<h4 id="_20">字段</h4>
+<ul>
+<li>players：对局用户，是一个指向<code>User</code>的多对多外键</li>
+<li>contest：比赛，是一个指向<code>Contest</code>的多对一外键，可以为空，表示这是游戏对局而非比赛对局</li>
+<li>game：游戏，是一个指向<code>Game</code>的多对一外键</li>
+<li>state：状态，评测机给出，从Match常量成员STATE取值，目前为['准备中', '评测中', '评测成功', '评测失败']</li>
+<li>create_time：创建时间，自动生成</li>
+<li>file：对局文件，评测机给出</li>
+<li>message：评测字符串，评测机给出，包含了得分情况，需要后端根据通信格式解析</li>
+</ul>
+<h4 id="_21">约束</h4>
+<ul>
+<li>按create_time降序排序</li>
+</ul>
+<h3 id="playerinfo">PlayerInfo</h3>
+<p>记录对局中各个选手得分情况的模型，在match.py中。</p>
+<h4 id="_22">字段</h4>
+<ul>
+<li>code：代码，是一个指向<code>Code</code>的多对一外键，可以为空，表示这是玩家控制而非AI</li>
+<li>user：用户，是一个指向<code>User</code>的多对一外键</li>
+<li>match：对局，是一个指向<code>Match</code>的多对一外键</li>
+<li>rank：排名</li>
+<li>score：分数</li>
+</ul>
+<h3 id="contestinfo">ContestInfo</h3>
+<p>用于记录一个对局关于比赛信息的模型，在match.py中。</p>
+<p>疑似冗余，计划删除。</p>
+<h2 id="_23">权限</h2>
+<p>权限管理使用了<code>rest_framework.permissions</code>部分的内容，在backend/saiblo/permissions文件夹中包含了所有权限设定，均继承自<code>rest_framework.permissions.BasePermission</code>。关于权限的使用属于django-rest基础知识，这里仅仅按文件列举出目前包含的权限以及语义。</p>
+<h3 id="applicationpy">application.py</h3>
+<ul>
+<li><code>IsApplicant</code>：判断用户是否是申请发起人，疑似冗余，计划删除。</li>
+<li><code>IsApplicationGroupManager</code>：判断用户是否是申请目标小组的管理员，疑似冗余，计划删除。</li>
+</ul>
+<h3 id="codepy">code.py</h3>
+<ul>
+<li><code>IsEntityOwner</code>：判断用户是否是AI的拥有者。</li>
+</ul>
+<h3 id="contestpy">contest.py</h3>
+<ul>
+<li><code>IsActivateContest</code>：判断比赛是否可以被加入/更改AI，已经结束的比赛不能再设置AI，对于双败淘汰赛制开始后即不能设置AI。</li>
+</ul>
+<h3 id="gamepy">game.py</h3>
+<ul>
+<li><code>IsGameManger</code>：判断用户是否有游戏管理权限，包括管理员与创建者两种情况</li>
+<li><code>IsGameCreator</code>：判断用户是否是游戏创建者</li>
+</ul>
+<h4 id="grouppy">group.py</h4>
+<ul>
+<li><code>NotInGroup</code>：判断用户是否不在小组中</li>
+<li><code>IsgGroupMember</code>：判断用户是否在小组中</li>
+<li><code>IsGroupManger</code>：判断用户是否有小组管理权限，包括管理员与创建者两种情况</li>
+<li><code>IsGroupCreator</code>：判断用户是否是小组创建者</li>
+<li><code>HasHigherPermission</code>：判断用户是否比目标用户有更高的小组权限，创建者&gt;管理员&gt;普通成员</li>
+</ul>
+<h3 id="userpy">user.py</h3>
+<ul>
+<li><code>IsAccountOwner</code>：判断用户是否是目标用户</li>
+</ul>
               
             </div>
           </div>
