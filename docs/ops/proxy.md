@@ -1,6 +1,6 @@
 ## 反向代理
 
-在 `frontend/nuxt.config.js` 中，配置了若干反向代理规则：
+在有些情况下，Saiblo 平台以一个端口对外提供服务，所以在 `frontend/nuxt.config.js` 中，我们配置了若干反向代理规则：
 
 ```js
 proxy: {
@@ -32,7 +32,7 @@ proxy: {
 },
 ```
 
-- `/api/`：到后端 API 的代理，注意只会代理到后端 `/api/` 下的地址，并不会暴露出后端 `/judger/` 的地址
+- `/api/`：到后端 API 的代理。注意这条规则只会代理到后端 `/api/` 下的地址，从而并不会暴露出后端 `/judger/` 的地址（这部分 API 是测评机的 API）。
 - `/admin/`：到后端 Django Admin 的代理
 - `/static/`：到后端静态文件的代理
 - `/ws/`：到后端 `Websocket` 地址的代理
